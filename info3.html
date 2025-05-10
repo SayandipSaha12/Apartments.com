@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real Estate Buyer Information</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+    * {
+      margin: 0;
+      padding: 0;
+      outline: none;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background-image: url('shiny-night-city.jpg');
+      height: 100vh;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .container {
+      width: 850px;
+      height: 750px;
+      background: #fff;
+      padding: 25px 40px;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+      border-radius: 20px;
+    }
+    .container .text {
+      text-align: center;
+      font-size: 32px;
+      font-weight: 600;
+      background: linear-gradient(135deg, #6bbdf8 0%, #3a8dca 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
+    }
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .form-row .input-data {
+      flex: 1;
+      position: relative;
+      min-width: 200px;
+      height: 40px;
+      margin-top: 20px;
+    }
+    .input-data input,
+    .input-data select,
+    .input-data textarea {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: none;
+      font-size: 16px;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.12);
+      background: transparent;
+    }
+    
+    .input-data .file-input-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.12);
+    }
+    
+    .input-data .file-input-container .file-name {
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      right: 30px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 16px;
+      color: #333;
+    }
+    
+    .input-data .file-input-container input[type="file"] {
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      z-index: 2;
+    }
+    
+    .input-data .file-input-container .file-icon {
+      position: absolute;
+      right: 0;
+      bottom: 10px;
+      color: #666;
+      cursor: pointer;
+      z-index: 1;
+    }
+    
+    .input-data .file-input-container label {
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      color: #666;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+    
+    .input-data .file-input-container.has-file label {
+      transform: translateY(-20px);
+      font-size: 14px;
+      color: #3498db;
+    }
+
+    .input-data input:focus ~ label, 
+    .input-data input:valid ~ label,
+    .input-data select:focus ~ label, 
+    .input-data select:valid ~ label,
+    .textarea textarea:focus ~ label, 
+    .textarea textarea:valid ~ label {
+      transform: translateY(-20px);
+      font-size: 14px;
+      color: #3498db;
+    }
+    .input-data label {
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      color: #666;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+    
+    .submit-btn {
+      text-align: center;
+      margin-top: 30px;
+    }
+    .submit-btn button {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #6bbdf8 0%, #3a8dca 100%);
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.3s ease;
+    }
+        
+    .submit-btn button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+      background: linear-gradient(135deg, #3a8dca 0%, #6bbdf8 100%);
+    }
+    @media (max-width: 700px) {
+      .container .text {
+        font-size: 24px;
+      }
+      .form-row {
+        flex-direction: column;
+      }
+      .form-row .input-data {
+        margin-top: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="text">Real Estate Buyer Information</div>
+    <form id="buyerForm" onsubmit="return validateForm()">
+      <div class="form-row">
+        <div class="input-data">
+          <input type="text" id="fullName" required>
+          <label for="fullName">Full Name</label>
+        </div>
+        <div class="input-data">
+          <input type="email" id="email" required>
+          <label for="email">Email Address</label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="input-data">
+          <input type="tel" id="contactNumber" required>
+          <label for="contactNumber">Contact Number</label>
+        </div>
+        <div class="input-data">
+          <input type="text" id="address" required>
+          <label for="address">Address</label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="input-data">
+          <input type="text" id="dateOfBirth" required placeholder="">
+          <label for="dateOfBirth">Date of Birth</label>
+        </div>
+        <div class="input-data">
+          <select id="idType" required>
+            <option value="" disabled selected></option>
+            <option>Aadhar Card</option>
+            <option>Driver's License</option>
+            <option>Voter Card</option>
+            <option>Pan Card</option>
+          </select>
+          <label for="idType">ID Type</label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="input-data">
+          <div class="file-input-container">
+            <input type="file" id="idImage" required onchange="updateFileName('idImage')">
+            <div class="file-name"></div>
+            <label for="idImage">Upload ID Image</label>
+            <span class="file-icon">📎</span>
+          </div>
+        </div>
+        <div class="input-data">
+          <input type="text" id="idNumber" required>
+          <label for="idNumber">ID Number</label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="input-data">
+          <input type="text" id="occupation" required>
+          <label for="occupation">Occupation</label>
+        </div>
+        <div class="input-data">
+          <input type="number" id="annualIncome" required>
+          <label for="annualIncome">Annual Income</label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="input-data">
+          <div class="file-input-container">
+            <input type="file" id="incomeProof" required onchange="updateFileName('incomeProof')">
+            <div class="file-name"></div>
+            <label for="incomeProof">Proof of Income</label>
+            <span class="file-icon">📎</span>
+          </div>
+        </div>
+        <div class="input-data">
+          <select id="intendedUse" required>
+            <option value="" disabled selected></option>
+            <option>Personal Use</option>
+            <option>Rental</option>
+            <option>Investment</option>
+          </select>
+          <label for="intendedUse">Intended Use</label>
+        </div>
+      </div>
+
+      <div class="submit-btn">
+        <br>
+        <button type="submit">Submit & Proceed</button>
+      </div>
+      
+    </form>
+  </div>
+
+  <script>
+    function validateForm() {
+      // Validate form fields
+      const form = document.getElementById('buyerForm');
+      const email = document.getElementById('email').value;
+      const contactNumber = document.getElementById('contactNumber').value;
+      const dateOfBirth = document.getElementById('dateOfBirth').value;
+      const idImage = document.getElementById('idImage').files.length;
+      const incomeProof = document.getElementById('incomeProof').files.length;
+      const requiredFields = ['fullName', 'email', 'contactNumber', 'address', 'dateOfBirth', 'idType', 'idNumber', 'occupation', 'annualIncome', 'intendedUse'];
+
+      // Check if all required fields are filled
+      for (let fieldId of requiredFields) {
+        const field = document.getElementById(fieldId);
+        if (!field.value || (field.type === 'file' && field.files.length === 0)) {
+          alert('Please fill all required fields.');
+          return false;
+        }
+      }
+
+      // Additional checks (e.g., email format, contact number format)
+      const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+      if (!emailPattern.test(email)) {
+        alert('Please enter a valid email address.');
+        return false;
+      }
+
+      // If everything is valid, allow form submission
+      window.location.href = 'token-pay2.html';
+      return false; // Prevent form submission for redirect
+    }
+
+    // File input handler to update the file name in the container
+    function updateFileName(inputId) {
+      const fileInput = document.getElementById(inputId);
+      const fileName = fileInput.files.length ? fileInput.files[0].name : '';
+      const fileNameContainer = fileInput.parentElement.querySelector('.file-name');
+      
+      if (fileName) {
+        fileInput.parentElement.classList.add('has-file');
+        fileNameContainer.textContent = fileName;
+      } else {
+        fileInput.parentElement.classList.remove('has-file');
+        fileNameContainer.textContent = '';
+      }
+    }
+
+    // Add date input validation
+    const dateInput = document.getElementById('dateOfBirth');
+    dateInput.addEventListener('input', function(e) {
+      let value = e.target.value;
+      
+      // Remove any non-digit characters except forward slash
+      value = value.replace(/[^\d/]/g, '');
+      
+      // Add slashes automatically
+      if (value.length >= 2 && value.charAt(2) !== '/') {
+        value = value.slice(0, 2) + '/' + value.slice(2);
+      }
+      if (value.length >= 5 && value.charAt(5) !== '/') {
+        value = value.slice(0, 5) + '/' + value.slice(5);
+      }
+      
+      // Limit to 10 characters (DD/MM/YYYY)
+      value = value.slice(0, 10);
+      
+      e.target.value = value;
+    });
+  </script>
+</body>
+</html>

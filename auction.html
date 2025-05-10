@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Property Auctions</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+            * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #2c3e50;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #6bbdf8 0%, #3a8dca 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .container {
+            max-width: 2000px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1rem;
+            padding: 0.5rem;
+        }
+
+        .property-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .property-image {
+            width: 100%;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .property-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .property-details {
+            padding: 1rem;
+        }
+
+        .property-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+            color: #2c3e50;
+        }
+
+        .property-location {
+            color: #7f8c8d;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.9rem;
+        }
+
+        .property-price {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .property-meta {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 0.5rem;
+            border-top: 1px solid #ecf0f1;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .auction-controls {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: flex-start;
+            margin-top: 2rem;
+        }
+
+    .btn {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.8rem;
+    margin-top: 1rem;  /* Consistent top margin for all buttons */
+}
+
+        .timer {
+            color: #e74c3c;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .tab {
+            padding: 0.6rem 1.2rem;
+            background: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .tab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #6bbdf8 0%, #3a8dca 100%);
+            color: white;
+        }
+
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            padding: 1rem;
+        }
+
+        .property-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .property-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .property-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #6bbdf8 0%, #3a8dca 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .property-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('/api/placeholder/400/320') center/cover;
+            opacity: 0.8;
+        }
+
+        .property-status {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .status-upcoming {
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            color: white;
+        }
+
+        .status-live {
+            background: linear-gradient(to top, #9be15d 0%, #00e3ae 100%);
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        .status-ended {
+            background: linear-gradient(135deg, #FFD400,#FFEA61);
+            color: white;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .property-details {
+            padding: 1.5rem;
+        }
+
+        .property-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+
+        .property-location {
+            color: #7f8c8d;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .property-price {
+            font-size: 1.25rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .property-meta {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 1rem;
+            border-top: 1px solid #ecf0f1;
+            color: #7f8c8d;
+        }
+
+       
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6bbdf8 0%, #3a8dca 100%);
+            color: white;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #7f8c8d;
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: #2c3e50;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ecf0f1;
+            border-radius: 8px;
+            transition: border-color 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        .bid-info {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .timer {
+            color: #e74c3c;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+        }
+
+        .participant-count {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(255,255,255,0.9);
+            padding: 0.5rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            color: #2c3e50;
+        }
+
+    .auction-controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;  /* Center align all buttons */
+    margin-top: 1rem;
+    width: 100%;
+}
+
+        @media (max-width: 768px) {
+            .properties-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .tabs {
+                flex-wrap: wrap;
+            }
+        }
+      
+        .btn-ended,
+.btn-upcoming {
+    margin-top: 1rem;  /* Match other buttons */
+}
+
+
+
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1> Property Auctions</h1>
+        <br>
+        <p>Exclusive Properties. Competitive Bidding. Transparent Process.</p>
+    </header>
+
+    <div class="container">
+        <div class="tabs">
+            <button class="tab active" data-filter="all">
+                <i class="fas fa-th-large"></i> All Properties
+            </button>
+            <button class="tab" data-filter="upcoming">
+                <i class="fas fa-clock"></i> Upcoming
+            </button>
+            <button class="tab" data-filter="live">
+                <i class="fas fa-broadcast-tower"></i> Live Now
+            </button>
+            <button class="tab" data-filter="ended">
+                <i class="fas fa-flag-checkered"></i> Ended
+            </button>
+        </div>
+
+        <div class="properties-grid" id="propertiesGrid">
+            <!-- Properties will be dynamically added here -->
+        </div>
+    </div>
+
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeLoginModal()">×</span>
+            <h2 id="loginTitle" style="margin-bottom: 1.5rem;"></h2>
+            <div class="bid-info" id="propertyInfo"></div>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> Login to Participate
+                </button>
+            </form>
+        </div>
+    </div>
+    <script>
+function getTimeRemaining(targetDate) {
+    const now = new Date();
+    const target = new Date(targetDate);
+    const difference = target - now;
+
+    if (difference <= 0) return "Auction started";
+
+    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+
+    if (days > 0) return `${days} day${days !== 1 ? 's' : ''} to start`;
+    if (hours > 0) return `${hours} hour${hours !== 1 ? 's' : ''} to start`;
+    return `${minutes} minute${minutes !== 1 ? 's' : ''} to start`;
+}
+
+const properties = [
+    {
+        id: 1,
+        title: "Elegant Penthouse",
+        location: "New Town, Kolkata",
+        basePrice: "₹20,000,000",
+        status: "live",
+        currentBid: "₹22,000,000",
+        participants: 12,
+        timeLeft: "2h 45m",
+        amenities: ["3 Beds", "3 Baths", "2,000 sq ft"],
+        image: "pexels-beingsanshots-14915303.jpg"
+    },
+    {
+        id: 2,
+        title: "Luxury Apartment",
+        location: "Salt Lake, Kolkata",
+        basePrice: "₹15,000,000",
+        status: "upcoming",
+        auctionDate: "2025-01-22",
+        amenities: ["4 Beds", "4 Baths", "2,200 sq ft"],
+        image: "pexels-betsy-eno-587675648-28352605.jpg"
+    },
+    {
+        id: 3,
+        title: "Luxurious & Cozy Bungalow",
+        location: "Indiranagar, Bangalore",
+        basePrice: "₹27,000,000",
+        status: "ended",
+        soldPrice: "₹30,000,000",
+        amenities: ["5 Beds", "5 Baths", "3,200 sq ft"],
+        image: "pexels-igor-starkov-233202-1693946.jpg"
+    },
+    {
+        id: 4,
+        title: "Spacious Villa",
+        location: "Southern Avenue, Kolkata",
+        basePrice: "₹30,000,000",
+        status: "live",
+        currentBid: "₹33,000,000",
+        participants: 8,
+        timeLeft: "1h 30m",
+        amenities: ["5 Beds", "5 Baths", "3,500 sq ft"],
+        image: "photo-1717167398817-121e3c283dbb.avif"
+    },
+    {
+        id: 5,
+        title: "Lakeside Studio Apartment",
+        location: "Hebbal, Bangalore",
+        basePrice: "₹60,00,000",
+        status: "upcoming",
+        auctionDate: "2024-12-28",
+        amenities: ["3 Beds", "3 Baths", "2,000 sq ft"],
+        image: "3adeeb1a1fd2745655a60c27fa8e5d96-cc_ft_960.jpg"
+    },
+    {
+        id: 6,
+        title: "3BHK Flat",
+        location: "Whitefield, Bangalore",
+        basePrice: "₹75,00,000",
+        status: "ended",
+        soldPrice: "₹80,00,000",
+        amenities: ["3 Beds", "3 Baths", "1,500 sq ft"],
+        image: "pexels-photo-87223.jpeg"
+    },
+    {
+        id: 7,
+        title: "2BHK Flat",
+        location: "Park Street, Kolkata",
+        basePrice: "₹75,00,000",
+        status: "live",
+        currentBid: "₹78,00,000",
+        participants: 15,
+        timeLeft: "1h 20m",
+        amenities: ["2 Beds", "2 Baths", "1,100 sq ft"],
+        image: "annie-spratt-HfCg3eJKlJw-unsplash.jpg"
+    },
+    {
+        id: 8,
+        title: "Opulent Apartment",
+        location: "Koramangala, Bangalore",
+        basePrice: "₹10,000,000",
+        status: "upcoming",
+        auctionDate: "2024-12-30",
+        amenities: ["3 Beds", "3 Baths", "1,800 sq ft"],
+        image: "pexels-rotekirsche-20-3634832-5438780.jpg"
+    },
+    {
+        id: 9,
+        title: "Grandiose Mansion",
+        location: "Joka, Kolkata",
+        basePrice: "₹30,000,000",
+        status: "ended",
+        soldPrice: "₹35,000,000",
+        amenities: ["5 Beds", "5 Baths", "4,100 sq ft"],
+        image: "NEWSLETTER-2023-08-DISENO-ARQUITECTONICO-DE-VILLAS-DE-LUJO-JOSE-MARIA-REYES-3.jpg"
+    }
+];
+
+let currentUser = null;
+let currentUserType = null;
+let selectedPropertyId = null;
+
+function filterProperties(status) {
+        // Remove active class from all tabs
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.classList.remove('active');
+        });
+        
+        // Add active class to clicked tab
+        document.querySelector(`.tab[data-filter="${status}"]`).classList.add('active');
+        
+        // Render filtered properties
+        renderProperties(status);
+    }
+
+    function joinAuction(propertyId) {
+    let redirectUrl = '';
+
+    switch (propertyId) {
+        case 1: // Elegant Penthouse
+            redirectUrl = 'sam3.html';
+            break;
+        case 7: // 2BHK Flat
+            redirectUrl = 'sam1.html';
+            break;
+        case 4: // Spacious Villa
+            redirectUrl = 'sam2.html';
+            break;
+        default:
+            redirectUrl = `sam.html?propertyId=${propertyId}`;
+            break;
+    }
+
+    window.location.href = redirectUrl;
+}
+
+
+function renderProperties(filter = 'all') {
+    const grid = document.getElementById('propertiesGrid');
+    grid.innerHTML = '';
+
+    const filteredProperties = filter === 'all' 
+        ? properties 
+        : properties.filter(prop => prop.status === filter);
+
+    filteredProperties.forEach(property => {
+        const card = document.createElement('div');
+        card.className = 'property-card';
+
+        let statusClass = '';
+        let statusText = '';
+        let priceText = '';
+        let actionButton = '';
+        let timeRemainingText = '';
+
+        switch(property.status) {
+            case 'upcoming':
+                statusClass = 'status-upcoming';
+                statusText = 'Upcoming';
+                priceText = `Starting at: ${property.basePrice}`;
+                timeRemainingText = getTimeRemaining(property.auctionDate);
+                actionButton = `<button class="btn btn-primary btn-starting">
+                    ${timeRemainingText}
+                </button>`;
+                break;
+
+            case 'live':
+                statusClass = 'status-live';
+                statusText = 'Live Now';
+                priceText = `Current Bid: ${property.currentBid}`;
+                actionButton = `
+                    <div class="auction-controls">
+                        <button class="btn btn-primary" onclick="joinAuction(${property.id})">
+                            <i class="fas fa-gavel"></i> Join Auction
+                        </button>
+                    </div>`;
+                break;
+
+            case 'ended':
+                statusClass = 'status-ended';
+                statusText = 'Auction Ended';
+                priceText = `Sold for: ${property.soldPrice || 'Not Available'}`;
+                actionButton = `<button class="btn btn-secondary" disabled>
+                    Auction Ended - Winner: ${property.winner || 'Anonymous Bidder'}
+                </button>`;
+                break;
+        }
+
+        card.innerHTML = `
+            <div class="property-card-content ${(property.id === 2 || property.id === 7) ? 'flex-layout' : ''}">
+                <div class="property-image">
+                    <img src="${property.image}" alt="${property.title}">
+                    <span class="property-status ${statusClass}">
+                        <i class="fas fa-${property.status === 'live' ? 'broadcast-tower' : 
+                                          property.status === 'upcoming' ? 'clock' : 'flag-checkered'}"></i>
+                        ${statusText}
+                    </span>
+                </div>
+                <div class="property-details">
+                    <h3 class="property-title">${property.title}</h3>
+                    <div class="property-location">
+                        <i class="fas fa-map-marker-alt"></i> ${property.location}
+                    </div>
+                    <div class="property-price">
+                        ${priceText}
+                        ${property.status === 'live' ? 
+                            `<div class="timer">
+                                <i class="fas fa-hourglass-half"></i> ${property.timeLeft} elapsed
+                            </div>` : 
+                            (property.status === 'upcoming' ? 
+                            `<div class="timer">
+                                <i class="fas fa-clock"></i> ${timeRemainingText}
+                            </div>` : '')
+                        }
+                    </div>
+                    <div class="property-meta">
+                        ${property.amenities.map(amenity => 
+                            `<span><i class="fas fa-${
+                                amenity.includes('Beds') ? 'bed' : 
+                                amenity.includes('Baths') ? 'bath' : 
+                                'ruler'
+                            }"></i> ${amenity}</span>`
+                        ).join('')}
+                    </div>
+                    ${(property.id === 2 || property.id === 7) ? '<div class="spacer"></div>' : ''}
+                    <div class="action-button-container">
+                        ${actionButton}
+                    </div>
+                </div>
+            </div>
+        `;
+
+        grid.appendChild(card);
+    });
+
+    updatePropertyCounts();
+}
+
+function updatePropertyCounts() {
+    const allCount = properties.length;
+    const liveCount = properties.filter(p => p.status === 'live').length;
+    const upcomingCount = properties.filter(p => p.status === 'upcoming').length;
+    const endedCount = properties.filter(p => p.status === 'ended').length;
+
+    document.querySelector('.all-count').textContent = allCount;
+    document.querySelector('.live-count').textContent = liveCount;
+    document.querySelector('.upcoming-count').textContent = upcomingCount;
+    document.querySelector('.ended-count').textContent = endedCount;
+}
+
+// Update timing and status
+setInterval(() => {
+    properties.forEach(property => {
+        // Handle live auctions
+        if (property.status === 'live' && property.timeLeft) {
+            let [hours, minutes] = property.timeLeft.split('h ').join(':').split('m')[0].split(':');
+            let totalMinutes = parseInt(hours) * 60 + parseInt(minutes);
+            totalMinutes -= 1;
+            
+            if (totalMinutes <= 0) {
+                property.status = 'ended';
+                property.soldPrice = property.currentBid;
+                property.winner = `Bidder${Math.floor(Math.random() * 1000) + 1}`;
+            } else {
+                property.timeLeft = `${Math.floor(totalMinutes/60)}h ${totalMinutes%60}m`;
+            }
+        }
+        
+        // Handle upcoming auctions
+        if (property.status === 'upcoming' && property.auctionDate) {
+            const now = new Date();
+            const auctionDate = new Date(property.auctionDate);
+            if (now >= auctionDate) {
+                property.status = 'live';
+                property.timeLeft = '2h 0m';
+                property.currentBid = property.basePrice;
+                property.participants = 0;
+            }
+        }
+    });
+    
+    const currentFilter = document.querySelector('.filter-btn.active')?.getAttribute('data-filter') || 'all';
+    renderProperties(currentFilter);
+}, 60000);
+
+document.addEventListener('DOMContentLoaded', function() {
+        // Add click handlers to all tabs
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const filter = this.getAttribute('data-filter');
+                filterProperties(filter);
+            });
+        });
+
+        // Initial render
+        renderProperties('all');
+    });
+
+
+</script>

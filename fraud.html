@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report A Fraud | Apartments.com</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-image: url('shiny-night-city.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 90%;
+            max-width: 600px;
+            margin: 20px 0;
+        }
+        
+        header {
+            background-color: #fff;
+            padding: 20px;
+            border-bottom: 1px solid #eaeaea;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-weight: 600;
+            font-size: 24px;
+            color: #64a0e6;
+        }
+        
+        nav a {
+            color: #333;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+        
+        .content {
+            padding: 40px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #000000;
+            margin-bottom: 20px;
+        }
+        
+        .detective-img {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 20px;
+        }
+        
+        .form-container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 20px;
+        }
+        
+        .step-indicator {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 10px;
+        }
+        
+        h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        
+        .options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .option {
+            background-color: #fff;
+            border: 2px solid #eaeaea;
+            border-radius: 10px;
+            padding: 20px;
+            width: 150px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .option:hover, .option.selected {
+            border-color: #3794e0;
+            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.1);
+        }
+        
+        .option img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+        
+        .option-label {
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .next-button {
+            background-color: #569ae7;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .next-button:hover {
+            background-color: #3f3de4;
+        }
+        
+        #detailsForm {
+            display: none;
+            margin-top: 30px;
+            text-align: left;
+        }
+        
+        #detailsForm label {
+            display: block;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+        
+        #detailsForm input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">Apartments.com</div>
+            <nav>
+                <a href="old2.html">Home</a>
+            </nav>
+        </header>
+        <div class="content">
+            <h1  style="font-weight: 800; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">REPORT A FRAUD</h1>
+            <img src="pngegg (3).png" alt="Detective" class="detective-img">
+            <div class="form-container">
+                <div class="step-indicator">Step 1 of 2</div>
+                <h2>Select Category</h2>
+                <div class="options">
+                    <div class="option" data-type="credit">
+                        <img src="credit-card-fast-logo-symbol-icon-vector-graphic-design-illustration_15473-694.avif" alt="Credit Card Icon">
+                        <div class="option-label">Credit Card Fraud</div>
+                    </div>
+                    <div class="option" data-type="other">
+                        <img src="qr-code-bar-code-icon-digital-technology-blue-vector-32386857.jpg" alt="QR Code Icon">
+                        <div class="option-label">Any Other Fraud</div>
+                    </div>
+                </div>
+                <div id="detailsForm">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" required>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" required>
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone" required>
+                    <label for="details">Credit Card Last 4 Digits:</label>
+                    <input type="text" id="details" required>
+                    <label for="details">Amount:</label>
+                    <input type="text" id="details" required>
+                    <label for="details">Fraud Details:</label>
+                    <input type="text" id="details" required>  
+                    </div>
+                </div>
+                <button class="next-button">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const options = document.querySelectorAll('.option');
+        const detailsForm = document.getElementById('detailsForm');
+        const nextButton = document.querySelector('.next-button');
+        const creditCardField = document.querySelector('label[for="details"]');
+    
+        options.forEach(option => {
+            option.addEventListener('click', () => {
+                options.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                detailsForm.style.display = 'block';
+                
+                // Show or hide the credit card field based on the selected fraud type
+                if (option.getAttribute('data-type') === 'other') {
+                    creditCardField.style.display = 'none';
+                    creditCardField.nextElementSibling.style.display = 'none'; // Hide the input field as well
+                } else {
+                    creditCardField.style.display = 'block';
+                    creditCardField.nextElementSibling.style.display = 'block'; // Show the input field
+                }
+            });
+        });
+    
+        nextButton.addEventListener('click', () => {
+            const selectedOption = document.querySelector('.option.selected');
+            if (selectedOption) {
+                const formInputs = document.querySelectorAll('#detailsForm input');
+                let allFilled = true;
+                formInputs.forEach(input => {
+                    if (!input.value) allFilled = false;
+                });
+                if (allFilled) {
+                    alert('Form submitted successfully!');
+                } else {
+                    alert('Please fill in all details.');
+                }
+            } else {
+                alert('Please select a fraud category.');
+            }
+        });
+    </script>
+    
+</body>
+</html>

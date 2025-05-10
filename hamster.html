@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Auction Winner - Congratulations!</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-image: url('shiny-night-city.jpg');
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background-attachment: fixed;
+        }
+
+        .winner-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 50px;
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: all 0.5s ease;
+        }
+
+
+        .confetti-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background-color: transparent;
+            opacity: 0.8;
+            border-radius: 3px;
+            animation: confettiDrop linear infinite;
+        }
+
+        @keyframes confettiDrop {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .trophy-icon {
+            font-size: 4rem;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            text-shadow: 0 8px 15px rgba(255,215,0,0.2);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #24c6dc, #514a9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        .congratulations-text {
+            color: #333;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            opacity: 0.8;
+        }
+
+        .proceed-button {
+            background: linear-gradient(135deg, #24c6dc, #514a9d);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(36, 198, 220, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .proceed-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: all 0.5s ease;
+        }
+
+        .proceed-button:hover::before {
+            left: 100%;
+        }
+
+        .proceed-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(36, 198, 220, 0.4);
+        }
+
+        @media (max-width: 600px) {
+            .winner-container {
+                padding: 30px;
+                width: 95%;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .trophy-icon {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="confetti-container" id="confettiContainer"></div>
+    <div class="winner-container">
+        <div class="trophy-icon">🏆</div>
+        <h1 style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">CONGRATULATIONS!</h1>
+        <br>
+        <p class="congratulations-text">
+            You've successfully won the authority to purchase the property. 
+            Your bid has been accepted, and you're one step closer to owning your dream property.
+            Please press the proceed button below to complete the property transaction.
+        </p>
+        <br>
+        <button class="proceed-button" onclick="proceedToPayment()">Proceed to Payment</button>
+    </div>
+
+    <script>
+        // Create confetti immediately when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            createConfetti();
+        });
+    
+        function createConfetti(count = 100) {
+            const colors = ['#24c6dc', '#514a9d', '#FFD700', '#FFA500', '#FF6B6B'];
+            const container = document.getElementById('confettiContainer');
+    
+            for (let i = 0; i < count; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                
+                // Random positioning and styles for each confetti piece
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = `${Math.random() * 15 + 5}px`;
+                confetti.style.height = `${Math.random() * 15 + 5}px`;
+    
+                // Ensures no delay in starting animation
+                confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                confetti.style.animationDelay = '0s';
+                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+    
+                container.appendChild(confetti);
+            }
+        }
+    
+        function proceedToPayment() {
+            window.location.href = 'payment.html'; // Redirects to the desired page
+        }
+    </script>
+    
+</body>
+</html>

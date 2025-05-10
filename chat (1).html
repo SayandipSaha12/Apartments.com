@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHAT WITH US</title>
+    <style>
+        body, html {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        .bg {
+            background-image: url('shiny-night-city.jpg');
+            height: 100vh;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .title {
+            font-size: 2.5em;
+            font-weight: 800;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 20px;
+        }
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .chat-window {
+            padding: 20px;
+        }
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 5px;
+        }
+        .message {
+            max-width: 70%;
+            padding: 8px 12px;
+            margin-bottom: 10px;
+            border-radius: 20px;
+            clear: both;
+            word-wrap: break-word;
+        }
+        .user-message {
+            background: #5fb3e4;
+            color: white;
+            float: right;
+        }
+        .bot-message {
+            background: rgb(226, 222, 233);
+            float: left;
+        }
+        .user-input {
+            display: flex;
+            padding: 10px 0;
+        }
+        .user-input input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px 0 0 5px;
+        }
+        .user-input button {
+            padding: 10px 20px;
+            background: #5fb3e4;
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+        .user-input button:hover {
+            background: #4a9bd4;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg">
+        <div class="container">
+            <div class="chat-window">
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message bot-message">Welcome to our chat! How can we assist you today?</div>
+                </div>
+                <div class="user-input">
+                    <input type="text" id="userInput" placeholder="Type your message here...">
+                    <button onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            if (message) {
+                addMessage(message, 'user-message');
+                input.value = '';
+                setTimeout(() => botReply(message), 1000);
+            }
+        }
+
+        function addMessage(text, className) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${className}`;
+            messageDiv.textContent = text;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function botReply(userMessage) {
+            let reply = "I'm sorry, I didn't understand that. How else can I help you?";
+            
+            if (userMessage.toLowerCase().includes('buy token')) {
+                reply = "To buy tokens, please follow these steps:\n1. Go to our website's 'Token' page\n2. Select the number of tokens you want\n3. Click 'Purchase'\n4. Complete the payment process\nIf you need further assistance, please let me know!";
+            } else if (userMessage.toLowerCase().includes('pricing')) {
+                reply = "Our pricing varies on the type and location of the property.";
+            } else if (userMessage.toLowerCase().includes('report a fraud')) {
+                reply = "To report fraud, please follow these steps:\n1. Go to our website's '☰' section\n2. Press the 'Report A Fraud' option\n3. Fill out the details \n4. Click Submit\nIf you need further assistance, please let me know!";
+            } else if (userMessage.toLowerCase().includes('contact support')) {
+                reply = "You can contact our support team by email at sahasayandip74@gmail.com or by phone at 8334086330. Our support hours are Monday to Friday, 9 AM to 6 PM EST.";
+            } else if (userMessage.toLowerCase().includes('thank you') || userMessage.toLowerCase().includes('thanks')) {
+                reply = "You're welcome! Is there anything else I can help you with?";
+            }
+
+            addMessage(reply, 'bot-message');
+        }
+
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>

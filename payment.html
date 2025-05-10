@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate Payment Gateway</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
+    <style>
+         * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+
+            background-image: url('shiny-night-city.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .payment-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 900px;
+            padding: 40px;
+            animation: fadeIn 0.5s ease-out;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .property-details {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            border: 1px solid rgba(0,0,0,0.05);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .property-details h2 {
+            color: #2d3748;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-label {
+            font-size: 14px;
+            color: #718096;
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            font-size: 16px;
+            color: #2d3748;
+            font-weight: 500;
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .payment-method {
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .payment-method:hover {
+            border-color: #4c86cc;
+            background: #f7fafc;
+        }
+
+        .payment-method.selected {
+            border-color: #6098db;
+            background: #ebf8ff;
+        }
+
+        .payment-icon {
+            width: 40px;
+            height: 40px;
+            background: #e2e8f0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .payment-method-details {
+            flex-grow: 1;
+        }
+
+        .payment-method-title {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 4px;
+        }
+
+        .payment-method-description {
+            font-size: 12px;
+            color: #718096;
+        }
+
+        .form-section {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .form-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #4a5568;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #2c5282;
+        }
+
+        .info-box {
+            background: #f7fafc;
+            border-left: 4px solid #2c5282;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #4a5568;
+        }
+
+        button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #6bbdf8 0%, #3a8dca 100%);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.3s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #3a8dca 0%, #6bbdf8 100%);
+            transform: translateY(-2px);
+        }
+
+        .crypto-address {
+            font-family: monospace;
+            background: #f7fafc;
+            padding: 10px;
+            border-radius: 5px;
+            word-break: break-all;
+        }
+
+        .terms {
+            font-size: 14px;
+            color: #718096;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .escrow-steps {
+            margin: 20px 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .escrow-steps li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #4a5568;
+        }
+
+        .escrow-steps li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #2c5282;
+            font-weight: bold;
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            color: #2f855a;
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: 500;
+            padding: 20px;
+            background: #f0fff4;
+            border-radius: 10px;
+        }
+        .home-button {
+            margin-top: 20px;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #6bbdf8 0%, #3a8dca 100%);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.3s ease;
+            display: none; /* Hidden by default */
+        }
+
+        .home-button:hover {
+            background: linear-gradient(135deg, #3a8dca 0%, #6bbdf8 100%);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-card">
+        <div class="header">
+            <h1>Real Estate Payment</h1>
+            <br>
+            <div class="property-details">
+                <h2>Property Details</h2>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Property ID</span>
+                        <span class="detail-value">PRO-XXXX-XXXX</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Property Type</span>
+                        <span class="detail-value">XXXXXXXX</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Address</span>
+                        <span class="detail-value">XXXXXXXXXXXXXXXX</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Total Price</span>
+                        <span class="detail-value">₹xxxxxxxx</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="payment-methods">
+            <div class="payment-method" onclick="selectPaymentMethod('wire')">
+                <div class="payment-icon">🏦</div>
+                <div class="payment-method-details">
+                    <div class="payment-method-title">Wire Transfer</div>
+                    <div class="payment-method-description">Bank to bank transfer</div>
+                </div>
+            </div>
+            <div class="payment-method" onclick="selectPaymentMethod('crypto')">
+                <div class="payment-icon">₿</div>
+                <div class="payment-method-details">
+                    <div class="payment-method-title">Cryptocurrency</div>
+                    <div class="payment-method-description">BTC, ETH, USDC accepted</div>
+                </div>
+            </div>
+            <div class="payment-method" onclick="selectPaymentMethod('escrow')">
+                <div class="payment-icon">🔒</div>
+                <div class="payment-method-details">
+                    <div class="payment-method-title">Escrow Service</div>
+                    <div class="payment-method-description">Secure third-party holding</div>
+                </div>
+            </div>
+            <div class="payment-method" onclick="selectPaymentMethod('card')">
+                <div class="payment-icon">💳</div>
+                <div class="payment-method-details">
+                    <div class="payment-method-title">Credit/Debit Card</div>
+                    <div class="payment-method-description">Credit/Direct bank card payment</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wire Transfer Form -->
+        <div id="wire-form" class="form-section">
+            <div class="info-box">
+                Please initiate the wire transfer using the following banking details. 
+                The transfer may take 2-3 business days to process.
+            </div>
+            <div class="form-group">
+                <label>Bank Name</label>
+                <div class="detail-value">First National Bank</div>
+            </div>
+            <div class="form-group">
+                <label>Account Name</label>
+                <div class="detail-value">Real Estate Trust Account</div>
+            </div>
+            <div class="form-group">
+                <label>Account Number</label>
+                <div class="detail-value">1234567890</div>
+            </div>
+            <div class="form-group">
+                <label>Routing Number</label>
+                <div class="detail-value">021000021</div>
+            </div>
+            <div class="form-group">
+                <label>SWIFT Code</label>
+                <div class="detail-value">FNBRUS33</div>
+            </div>
+            <button onclick="confirmPayment('wire')">Confirm Wire Transfer Details</button>
+        </div>
+
+        <!-- Cryptocurrency Form -->
+        <div id="crypto-form" class="form-section">
+            <div class="form-group">
+                <label>Select Cryptocurrency</label>
+                <select id="crypto-type" onchange="updateCryptoAddress()">
+                    <option value="btc">Bitcoin (BTC)</option>
+                    <option value="eth">Ethereum (ETH)</option>
+                    <option value="usdc">USD Coin (USDC)</option>
+                </select>
+            </div>
+            <div class="info-box">
+                Send exactly the amount shown below to the following address. 
+                The payment will be confirmed after 6 network confirmations.
+            </div>
+            <div class="form-group">
+                <label>Amount to Send</label>
+                <div id="crypto-amount" class="crypto-address">XX.XX BTC</div>
+            </div>
+            <div class="form-group">
+                <label>Wallet Address</label>
+                <div id="crypto-address" class="crypto-address">bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</div>
+            </div>
+            <button onclick="confirmPayment('crypto')">Send Via Cryptocurrency</button>
+        </div>
+
+        <!-- Escrow Form -->
+        <div id="escrow-form" class="form-section">
+            <div class="info-box">
+                Our escrow service ensures secure transaction processing through a trusted third party.
+            </div>
+            <ul class="escrow-steps">
+                <li>Funds are held securely until all parties agree</li>
+                <li>Property inspection and documentation verified</li>
+                <li>Title transfer completed</li>
+                <li>Funds released to seller</li>
+            </ul>
+            <div class="form-group">
+                <label>Full Legal Name</label>
+                <input type="text" placeholder="As per official documents" required>
+            </div>
+            <div class="form-group">
+                <label>Contact Email</label>
+                <input type="email" placeholder="For escrow communications" required>
+            </div>
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="tel" placeholder="For urgent notifications" required>
+            </div>
+            <button onclick="confirmPayment('escrow')">Initialize Escrow Service</button>
+        </div>
+
+        <!-- Debit Card Form -->
+        <div id="card-form" class="form-section">
+            <div class="info-box">
+                Please note: Large debit card transactions may require prior bank approval.
+            </div>
+            <div class="form-group">
+                <label>Cardholder Name</label>
+                <input type="text" placeholder="As shown on card" required>
+            </div>
+            <div class="form-group">
+                <label>Card Number</label>
+                <input type="text" id="card-number" placeholder="1234 5678 9012 3456" required>
+            </div>
+            <div class="detail-grid">
+                <div class="form-group">
+                    <label>Expiry Date</label>
+                    <input type="text" id="card-expiry" placeholder="MM/YY" required>
+                </div>
+                <div class="form-group">
+                    <label>CVV</label>
+                    <input type="text" id="card-cvv" placeholder="123" required>
+                </div>
+            </div>
+            <button onclick="confirmPayment('card')">Process Card Payment</button>
+        </div>
+
+        <div id="success-message" class="success-message">
+            Payment initiation successful! Our team will contact you shortly with next steps. 🏠
+        </div>
+        <button id="home-button" class="home-button" onclick="returnToHome()">
+            Return to Home
+        </button>
+
+
+        <div class="terms">
+            By proceeding with the payment, you agree to our terms and conditions. 
+            This transaction is secured and encrypted.
+        </div>
+    </div>
+
+    <script>
+        // Initialize Cleave.js for card input formatting
+        new Cleave('#card-number', {
+            creditCard: true
+        });
+
+        new Cleave('#card-expiry', {
+            date: true,
+            datePattern: ['m', 'y']
+        });
+
+        new Cleave('#card-cvv', {
+            numeral: true,
+            numeralPositiveOnly: true,
+            blocks: [3]
+        });
+
+        
+        function selectPaymentMethod(method) {
+    // Remove 'selected' class from all payment methods
+    document.querySelectorAll('.payment-method').forEach(el => {
+        el.classList.remove('selected');
+    });
+
+    // Add 'selected' class to the clicked payment method
+    document.querySelector(`.payment-method[onclick="selectPaymentMethod('${method}')"]`).classList.add('selected');
+
+    // Hide all form sections
+    document.querySelectorAll('.form-section').forEach(el => {
+        el.classList.remove('active');
+    });
+
+    // Show the form section corresponding to the selected payment method
+    document.getElementById(`${method}-form`).classList.add('active');
+}
+
+
+
+        function updateCryptoAddress() {
+            const cryptoType = document.getElementById('crypto-type').value;
+            const addresses = {
+                'btc': {
+                    address: 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh',
+                    amount: 'XX.XX BTC'
+                },
+                'eth': {
+                    address: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e',
+                    amount: 'XXX.X ETH'
+                },
+                'usdc': {
+                    address: '0x742d35Cc6634C0532925a3b844Bc454e4438f44e',
+                    amount: 'XXXXXXXXX USDC'
+                }
+            };
+            
+            document.getElementById('crypto-address').textContent = addresses[cryptoType].address;
+            document.getElementById('crypto-amount').textContent = addresses[cryptoType].amount;
+        }
+
+        function validateCardForm() {
+            const cardNumber = document.getElementById('card-number').value.replace(/\s/g, '');
+            const expiry = document.getElementById('card-expiry').value;
+            const cvv = document.getElementById('card-cvv').value;
+            
+            if (cardNumber.length !== 16) {
+                alert('Please enter a valid card number');
+                return false;
+            }
+            
+            if (!expiry.match(/^(0[1-9]|1[0-2])\/([0-9]{2})$/)) {
+                alert('Please enter a valid expiry date (MM/YY)');
+                return false;
+            }
+            
+            if (!cvv.match(/^[0-9]{3}$/)) {
+                alert('Please enter a valid CVV');
+                return false;
+            }
+            
+            return true;
+        }
+
+        function validateEscrowForm() {
+            const inputs = document.querySelectorAll('#escrow-form input');
+            let valid = true;
+            
+            inputs.forEach(input => {
+                if (!input.value.trim()) {
+                    alert(`Please fill in ${input.previousElementSibling.textContent}`);
+                    valid = false;
+                }
+                
+                if (input.type === 'email' && !input.value.includes('@')) {
+                    alert('Please enter a valid email address');
+                    valid = false;
+                }
+            });
+            
+            return valid;
+        }
+
+        function confirmPayment(method) {
+            let canProceed = true;
+            
+            switch(method) {
+                case 'card':
+                    canProceed = validateCardForm();
+                    break;
+                case 'escrow':
+                    canProceed = validateEscrowForm();
+                    break;
+                case 'wire':
+                    // Show confirmation dialog for wire transfer
+                    canProceed = confirm('Have you saved the wire transfer details? You will receive an email with these details as well.');
+                    break;
+                case 'crypto':
+                    // Show confirmation dialog for crypto payment
+                    canProceed = confirm('Have you verified the cryptocurrency address and amount? Transactions cannot be reversed.');
+                    break;
+            }
+            
+            if (canProceed) {
+                // Disable the clicked button
+                const button = document.querySelector(`#${method}-form button`);
+                button.disabled = true;
+                button.textContent = 'Processing...';
+                
+                // Simulate payment processing
+                setTimeout(() => {
+                    // Hide all forms
+                    document.querySelectorAll('.form-section').forEach(el => {
+                        el.classList.remove('active');
+                    });
+                    
+                    // Show success message with specific text based on method
+                    const successMessage = document.getElementById('success-message');
+                    switch(method) {
+                        case 'wire':
+                            successMessage.textContent = 'Wire transfer details confirmed! Please complete the transfer with your bank. You will receive a confirmation email shortly. 🏦';
+                            break;
+                        case 'crypto':
+                            successMessage.textContent = 'Cryptocurrency payment initiated! We will confirm once we receive the required number of network confirmations. 📱';
+                            break;
+                        case 'escrow':
+                            successMessage.textContent = 'Escrow service initialized! Our escrow agent will contact you within 24 hours to proceed. 🔒';
+                            break;
+                        case 'card':
+                            successMessage.textContent = 'Card payment successful! You will receive a confirmation email shortly. 💳';
+                            break;
+                    }
+                    successMessage.style.display = 'block';
+                    
+                    // Hide payment methods
+                    document.querySelector('.payment-methods').style.display = 'none';
+                }, 2000);
+            }
+        }
+
+        // Initialize crypto address on load
+        updateCryptoAddress();
+
+        // Add error handling for failed payments
+        window.onerror = function(msg, url, line) {
+            alert('An error occurred while processing your payment. Please try again or contact support.');
+            // Re-enable any disabled buttons
+            document.querySelectorAll('button').forEach(button => button.disabled = false);
+            return false;
+        };
+
+        
+        function returnToHome() {
+            window.location.href = 'old2.html';
+        }
+
+        function confirmPayment(method) {
+            let canProceed = true;
+            
+            switch(method) {
+                case 'card':
+                    canProceed = validateCardForm();
+                    break;
+                case 'escrow':
+                    canProceed = validateEscrowForm();
+                    break;
+                case 'wire':
+                    canProceed = confirm('Have you saved the wire transfer details? You will receive an email with these details as well.');
+                    break;
+                case 'crypto':
+                    canProceed = confirm('Have you verified the cryptocurrency address and amount? Transactions cannot be reversed.');
+                    break;
+            }
+            
+            if (canProceed) {
+                const button = document.querySelector(`#${method}-form button`);
+                button.disabled = true;
+                button.textContent = 'Processing...';
+                
+                setTimeout(() => {
+                    document.querySelectorAll('.form-section').forEach(el => {
+                        el.classList.remove('active');
+                    });
+                    
+                    const successMessage = document.getElementById('success-message');
+                    switch(method) {
+                        case 'wire':
+                            successMessage.textContent = 'Wire transfer details confirmed! Please complete the transfer with your bank. You will receive a confirmation email shortly. 🏦';
+                            break;
+                        case 'crypto':
+                            successMessage.textContent = 'Cryptocurrency payment initiated! We will confirm once we receive the required number of network confirmations. 📱';
+                            break;
+                        case 'escrow':
+                            successMessage.textContent = 'Escrow service initialized! Our escrow agent will contact you within 24 hours to proceed. 🔒';
+                            break;
+                        case 'card':
+                            successMessage.textContent = 'Card payment successful! You will receive a confirmation email shortly. 💳';
+                            break;
+                    }
+                    successMessage.style.display = 'block';
+                    
+                    // Show the home button after payment is processed
+                    document.getElementById('home-button').style.display = 'block';
+                    
+                    // Hide payment methods
+                    document.querySelector('.payment-methods').style.display = 'none';
+                }, 2000);
+            }
+        }
+    </script>
+</body>
+</html>

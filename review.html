@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #d0ddeb;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            height: 100vh;
+        }
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            height: 90vh;
+        }
+        .sidebar {
+            width: 250px;
+            height: 830px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        .main-content {
+            flex-grow: 1;
+            padding-left: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .user-icon-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .user-icon {
+            background-image: url('profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg');
+            width: 60px;
+            height: 60px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+            margin-right: 15px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+        .user-label {
+            font-weight: bold;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        .filter-button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 20px;
+            background-color: #f0f0f0;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .filter-button.active {
+            background-color: #e6e6fa;
+            color: #5bade4;
+            font-weight: bold;
+        }
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            color: #696969;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .menu-item:hover, .menu-item.active {
+            color: #3184d1;
+        }
+        .menu-item i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+        .new-badge {
+            background-color: #ff69b4;
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-left: 10px;
+        }
+        .logout {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        .empty-state {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .empty-state svg {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 20px;
+        }
+        .empty-state h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .empty-state p {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="user-icon-container">
+                <div class="user-icon"></div>
+                <div class="user-label">USER</div>
+            </div>
+            <nav>
+                <br>
+                <a href="#" class="menu-item" id="my-activity"><b>&nbsp;🎖️</b>&nbsp;&nbsp;&nbsp;Saved Properties</a>
+                <a href="#" class="menu-item active" id="my-transactions"><i>⭐</i> My Reviews</a>
+                <a href="#" class="menu-item" id="my-reviews">
+                    <i>📄</i> My Transactions
+                   
+                </a>
+                <a href="profile.html" class="menu-item"><i>✏️</i> Edit Profile</a>
+            </nav>
+            <a href="login1.html" class="menu-item logout" style="font-weight: 800;"><b>🔄</b> &nbsp;&nbsp;LOGIN</a>
+        </aside>
+        <main class="main-content">
+            <h1 id="section-title">My Reviews</h1>
+            <div class="filter-buttons" id="filter-buttons">
+                <button class="filter-button active" data-filter="all">All</button>
+                <button class="filter-button" data-filter="apartments">Positive</button>
+                <button class="filter-button" data-filter="housing-complex">Negative</button>
+            </div>
+            <br><br><br><br><br><br><br>
+            <div id="empty-state" class="empty-state">
+                <!-- SVG and text will be inserted here by JavaScript -->
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const myActivity = document.getElementById('my-activity');
+            const myReviews = document.getElementById('my-reviews');
+            const myTransactions = document.getElementById('my-transactions');
+            const filterButtonsContainer = document.getElementById('filter-buttons');
+            const sectionTitle = document.getElementById('section-title');
+            const emptyState = document.getElementById('empty-state');
+            
+            function setActiveMenuItem(item) {
+                document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            }
+
+            function updateFilterButtons(buttons) {
+                filterButtonsContainer.innerHTML = '';
+                buttons.forEach((buttonText, index) => {
+                    const button = document.createElement('button');
+                    button.className = 'filter-button' + (index === 0 ? ' active' : '');
+                    button.textContent = buttonText;
+                    button.dataset.filter = buttonText.toLowerCase().replace(' ', '-');
+                    filterButtonsContainer.appendChild(button);
+                });
+                addFilterButtonListeners();
+            }
+
+            function addFilterButtonListeners() {
+                document.querySelectorAll('.filter-button').forEach(button => {
+                    button.addEventListener('click', function() {
+                        document.querySelectorAll('.filter-button').forEach(btn => btn.classList.remove('active'));
+                        this.classList.add('active');
+                        console.log('Filter selected:', this.dataset.filter);
+                    });
+                });
+            }
+
+            function updateEmptyState(type) {
+                let svg, title, description;
+                switch(type) {
+                    case 'activity':
+                        svg = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="50" cy="50" r="45" fill="#e6e6fa"/>
+                                <path d="M50 25v25h15" stroke="#4b0082" stroke-width="5" fill="none"/>
+                                <circle cx="50" cy="50" r="5" fill="#4b0082"/>
+                            </svg>`;
+                        title = "No Saved Properties";
+                        description = "You haven't saved any properties yet";
+                        break;
+                    case 'reviews':
+                        svg = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <polygon points="50,10 61,35 88,38 69,57 74,83 50,71 26,83 31,57 12,38 39,35" fill="#e6e6fa"/>
+                            </svg>`;
+                        title = "No Reviews";
+                        description = "You haven't submitted any reviews yet";
+                        break;
+                    case 'transactions':
+                        svg = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="20" y="20" width="60" height="60" rx="10" fill="#e6e6fa"/>
+                                <path d="M30 40h40 M30 50h40 M30 60h20" stroke="#4b0082" stroke-width="5"/>
+                            </svg>`;
+                        title = "No Transactions";
+                        description = "You haven't made any transactions yet";
+                        break;
+                }
+                emptyState.innerHTML = `
+                    ${svg}
+                    <h2>${title}</h2>
+                    <p>${description}</p>
+                `;
+            }
+
+            myActivity.addEventListener('click', function(e) {
+                e.preventDefault();
+                setActiveMenuItem(this);
+                updateFilterButtons(['All', 'Apartments', 'Housing Complex', 'Flats', 'Villas']);
+                sectionTitle.textContent = 'Saved Properties';
+                updateEmptyState('activity');
+            });
+
+            myReviews.addEventListener('click', function(e) {
+                e.preventDefault();
+                setActiveMenuItem(this);
+                updateFilterButtons(['All', 'Positive', 'Negative']);
+                sectionTitle.textContent = 'My Reviews';
+                updateEmptyState('reviews');
+            });
+
+            myTransactions.addEventListener('click', function(e) {
+                e.preventDefault();
+                setActiveMenuItem(this);
+                updateFilterButtons(['All', 'Apartments', 'Housing Complex', 'Flats', 'Villas']);
+                sectionTitle.textContent = 'My Transactions';
+                updateEmptyState('transactions');
+            });
+
+            addFilterButtonListeners();
+            updateEmptyState('reviews'); // Initial state
+        });
+    </script>
+</body>
+</html>

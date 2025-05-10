@@ -1,0 +1,1325 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apartment.com</title>
+    <style>
+           
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #202020;  
+            color: rgb(7, 4, 4);
+            margin: 0;
+            padding: 0;
+        }
+        footer {
+            display: flex;
+            justify-content: space-around;
+            padding: 40px;
+            background-color: #202020;
+        }
+        .column {
+            width: 15%;
+        }
+        .column h3 {
+            color: #f1f1f1;
+        }
+        .column ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .column ul li {
+            padding: 5px 0;
+        }
+        .column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .column ul li a:hover {
+            color: #999; /* Darker color on hover */
+        }
+        .footer-bottom {
+            background-color: #202020;
+            padding: 20px;
+            text-align: center;
+        }
+        .footer-bottom img {
+            margin-top: 10px;
+        }
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .social-icons img {
+            width: 24px;
+            height: 24px;
+            margin: 0 10px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+    background-image: url("wp7292668-white-pattern-wallpapers.jpg");
+    background-size: cover; /* Ensures the image covers the entire background */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-position: center; /* Centers the image */
+}
+
+
+.header {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    justify-content: space-between;
+    background: linear-gradient(135deg, #6bbdf8 0%, #3a8dca 100%);
+    color: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center; /* Align logo and text on the same line */
+    gap: 10px; /* Adjust spacing between logo and text as needed */
+}
+
+.logo-image {
+    height: 55px; /* Adjust logo size */
+}
+
+.logo-text {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 900;
+    font-size: 30px;
+    color: white;
+}
+
+/* Updated nav buttons with modern design */
+.nav-buttons .nav-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9em;
+}
+
+.nav-buttons .nav-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+
+        header .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-buttons .nav-btn {
+            background-color: white;
+            color: #080a13;
+            border: none;
+            padding: 10px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .nav-btn {
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        /* Navigation Buttons remain the same */
+.nav-buttons .nav-btn {
+    background: linear-gradient(145deg, #ffffff, #D7E1EC);
+    color: rgb(0, 0, 0);
+    padding: 12px 28px;
+    border-radius: 16px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.95em;
+    position: relative;
+    border: none;
+    box-shadow: 
+        5px 5px 10px rgba(41, 121, 181, 0.2),
+        -5px -5px 10px rgba(255, 255, 255, 0.1),
+        inset 0 0 0 rgba(107, 189, 248, 0.2);
+}
+
+.nav-buttons .nav-btn:hover {
+    box-shadow: 
+        8px 8px 15px rgba(41, 121, 181, 0.3),
+        -8px -8px 15px rgba(255, 255, 255, 0.15),
+        inset 0 0 0 rgba(107, 189, 248, 0.2);
+    transform: translateY(-2px);
+    background: linear-gradient(145deg, #79b5dd, #4b97da);
+}
+
+.nav-buttons .nav-btn:active {
+    box-shadow: 
+        0 0 0 rgba(41, 121, 181, 0.2),
+        0 0 0 rgba(255, 255, 255, 0.1),
+        inset 4px 4px 8px rgba(41, 121, 181, 0.3),
+        inset -4px -4px 8px rgba(255, 255, 255, 0.1);
+    transform: translateY(1px);
+}
+
+
+.search-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 20px;
+    position: relative;
+    height: 400px;
+    border-radius: 5px;
+    overflow: hidden;
+    gap: 12px;
+}
+
+/* Container for search elements */
+.search-group {
+    display: flex;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    padding: 8px;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Styled Select Dropdown */
+.search-bar select {
+    width: 180px;
+    padding: 12px 20px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    font-size: 1em;
+    background: rgba(255, 255, 255, 0.9);
+    color: #2c3e50;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%232c3e50' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    padding-right: 40px;
+}
+
+.search-bar select:hover {
+    background-color: #ffffff;
+    border-color: rgba(107, 189, 248, 0.3);
+    box-shadow: 0 4px 15px rgba(107, 189, 248, 0.1);
+}
+
+.search-bar select:focus {
+    outline: none;
+    border-color: #6bbdf8;
+    box-shadow: 0 4px 15px rgba(107, 189, 248, 0.2);
+}
+
+/* Styled Search Input */
+.search-bar input {
+    width: 500px;
+    padding: 12px 20px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    font-size: 1em;
+    background: rgba(255, 255, 255, 0.9);
+    color: #2c3e50;
+    transition: all 0.3s ease;
+}
+
+.search-bar input:hover {
+    background-color: #ffffff;
+    border-color: rgba(107, 189, 248, 0.3);
+    box-shadow: 0 4px 15px rgba(107, 189, 248, 0.1);
+}
+
+.search-bar input:focus {
+    outline: none;
+    border-color: #6bbdf8;
+    box-shadow: 0 4px 15px rgba(107, 189, 248, 0.2);
+}
+
+/* Modern Search Button */
+.search-bar button {
+    padding: 12px 32px;
+    background: linear-gradient(135deg, #6bbdf8 0%, #3a8dca 100%);
+    width: 200px;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(107, 189, 248, 0.3);
+}
+
+.search-bar button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    transition: 0.6s;
+}
+
+.search-bar button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(107, 189, 248, 0.4);
+    background: linear-gradient(135deg, #7ac6ff 0%, #4596d3 100%);
+}
+
+.search-bar button:hover::before {
+    left: 100%;
+}
+
+.search-bar button:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 15px rgba(107, 189, 248, 0.2);
+}
+
+/* Background Video Styling */
+#backgroundVideo {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 88%;
+    z-index: -1;
+    object-fit: cover;
+    filter: brightness(0.9) contrast(1.1);
+}
+
+/* Responsive Design */
+@media (max-width: 960px) {
+    .search-group {
+        flex-direction: column;
+        width: 90%;
+        max-width: 500px;
+    }
+    
+    .search-bar input,
+    .search-bar select,
+    .search-bar button {
+        width: 100%;
+    }
+}
+
+
+
+
+
+/* Fix for card hover effect */
+.card:hover {
+    transform: translateY(-5px); /* Lifts the card slightly on hover */
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15); /* Adds a more pronounced shadow */
+}
+
+.card:hover img {
+    transform: scale(1.05); /* Slightly enlarges the image on hover */
+    transition: transform 0.3s ease; /* Smooth transition for the image */
+}
+
+  
+  .new-card:hover img {
+    transform: scale(1.05);
+  }
+  
+  .nav-button:hover {
+    background: #4169E1 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(100, 149, 237, 0.3);
+  }
+  
+  .slider-nav-button:hover {
+    background: #f8f9fa !important;
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  .contact-agent-button:hover {
+    background: #4169E1; /* Change to desired color */
+    color: #fff; /* Text color on hover */
+    transform: translateY(-3px); /* Lift the button slightly */
+    box-shadow: 0 8px 20px rgba(65, 105, 225, 0.3); /* Shadow effect */
+    transition: all 0.3s ease; /* Smooth transition */
+}
+
+  
+  
+
+
+   
+
+.recommended-sellers h2 {
+    text-align: left;
+    margin-top: 2px;
+    margin-bottom: 20px;
+    font-size: 36px;
+    font-weight: 900;
+    color: #000;
+    margin-left: 20px;
+    letter-spacing: 2px;
+    font-family: Arial, sans-serif;
+}
+
+.sellers-container {
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;
+    padding: 30px 0;
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+    
+    .sellers-container::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .seller-card {
+        flex: 0 0 320px;
+        background: #cfe1f3;
+        border-radius: 20px;
+        padding: 30px;
+        text-align: center;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        border: 1px solid #eee;
+    }
+    
+    .seller-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #6495ED, #4169E1);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        border-radius: 20px 20px 0 0;
+    }
+    
+    .seller-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    }
+    
+    .seller-card:hover::before {
+        opacity: 1;
+    }
+    
+    .seller-image {
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        margin: 0 auto 25px;
+        border: 5px solid white;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+        object-fit: cover;
+    }
+    
+    .seller-card:hover .seller-image {
+        transform: scale(1.05);
+    }
+    
+    .seller-name {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #2c3e50;
+    }
+    
+    .seller-title {
+        color: #6495ED;
+        margin-bottom: 20px;
+        font-size: 16px;
+        font-weight: 500;
+    }
+    
+    .seller-stats {
+        display: flex;
+        justify-content: center;
+        gap: 25px;
+        margin-bottom: 25px;
+        padding: 15px;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border-radius: 12px;
+    }
+    
+    .stat {
+        text-align: center;
+    }
+    
+    .stat-number {
+        font-size: 20px;
+        font-weight: bold;
+        color: #4169E1;
+    }
+    
+    .stat-label {
+        font-size: 14px;
+        color: #6c757d;
+        margin-top: 5px;
+    }
+    
+    .seller-rating {
+        color: #ffd700;
+        margin-bottom: 25px;
+        font-size: 20px;
+        letter-spacing: 2px;
+    }
+    
+    .contact-btn {
+        background: linear-gradient(135deg, #6495ED, #4169E1);
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 16px;
+        font-weight: 500;
+        width: 100%;
+    }
+    
+    .contact-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(100, 149, 237, 0.4);
+    }
+    .scroll-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding-bottom: 30px;  /* Added padding at the bottom */
+    margin-top: 0;  /* Changed from 30px */
+}
+
+.scroll-btn {
+    background: #4169E1;
+    color: white;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.scroll-btn:hover {
+    background: #6495ED;
+    transform: scale(1.1);
+}
+    </style>
+
+<style>
+     .background-slider {
+         opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+
+    
+    .slider {
+        position: fixed;
+        top: 0;
+        right: -300px;
+        width: 300px;
+        height: 100%;
+        background-color: #ffffff;
+        transition: right 0.3s ease-in-out;
+        z-index: 1002; /* Higher z-index to ensure slider is above overlay */
+        box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .slider.open {
+        right: 0;
+    }
+
+    .slider-content {
+        padding: 20px;
+    }
+
+    .slider-btn {
+        display: block;
+        margin: 10px 0;
+        padding: 10px;
+        background-color: #00A8FF;
+        color: white;
+        text-decoration: none;
+        text-align: center;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .slider-btn:hover {
+        background-color: #759ce6;
+    }
+
+    .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1001; /* Ensure the overlay is above other content */
+    }
+
+    .user-icon {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .user-icon img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .user-name {
+        text-align: center;
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 30px;
+    }
+
+    .menu-item {
+        display: block;
+        padding: 15px 20px;
+        margin-bottom: 10px;
+        background-color: #f8f8f8;
+        color: #333;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+    .menu-item:hover {
+        background-color: #85baf1;
+        color: #ffffff;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .menu-item i {
+        margin-right: 10px;
+    }
+
+    .contact-info {
+        margin-top: 40px;
+        font-size: 14px;
+        color: #666;
+    }
+</style>
+    
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+</head>
+<body>
+   
+
+    <video autoplay muted loop id="backgroundVideo">
+        <source src="Untitled video - Made with Clipchamp (24).mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <header class="header">
+        <div class="logo-container">
+            <img src="logo.png" alt="Logo" style="height: 55px;">
+            <span style="font-family: 'Fredoka', sans-serif; font-weight: 900; font-size: 30px; color: white;">
+                APARTMENTS.COM
+            </span>
+        </div>
+        <div class="nav-buttons">
+            <div class="nav-buttons animate-up">
+            <a href="new.html" class="nav-btn">Logout</a>
+            <a href="info(sell).html" class="nav-btn">List Property</a>
+            <a href="auction.html" class="nav-btn">Auction</a>
+            <a href="#" class="nav-btn" id="hello-btn">☰</a> <!-- Added ID for ☰ button -->
+    
+            <div id="account-slider" class="slider">
+                <div class="sidebar">
+                    <div class="user-icon" style="text-align: center; margin-bottom: 20px;">
+                        <img src="profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg" alt="User Icon"
+                             style="
+                                 width: 60px; 
+                                 height: 60px; 
+                                 border-radius: 50%; 
+                                 object-fit: cover; 
+                                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                             ">
+                    </div>
+                     <div class="user-name" style="color: #080a13;">USER</div>
+                    <a href="new.html" class="menu-item"><i class="fas fa-sign-in-alt"></i> Logout</a>
+                    
+                    <a href= "fraud.html" class="menu-item"><i class="fas fa-exclamation-triangle"></i> Report a Fraud</a>
+                    <a href="transactions.html" class="menu-item"><i class="fas fa-exchange-alt"></i> My Transactions</a>
+                    <a href="saved.html" class="menu-item"><i class="fas fa-heart"></i> Saved Properties</a>
+                    <a href="review.html" class="menu-item"><i class="fas fa-comment"></i>My Reviews</a>
+                    <a href="chat.html" class="menu-item"><i class="fas fa-comments"></i> Chat with Us</a>
+                    
+                    <div class="contact-info">
+                        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                        <h4 style="font-weight:900;">CONTACT US :</h4>
+                        <br>
+                        <p>8334086330</p>
+                        <p>sahasayandip74@gmail.com</p>
+                    </div>
+            </div>  
+        </div>  
+    </header>
+
+    <div class="background-slider">
+        
+        <div class="slide" style="background-image: url('architecture-22039_1920.jpg')"></div>
+        <div class="slide" style="background-image: url('shiny-night-city.jpg')"></div>
+        <div class="slide" style="background-image: url('observation-urban-building-business-steel.jpg')"></div>
+        <div class="slide" style="background-image: url('exzenterhaus-2175925_1920.jpg')"></div>
+        <div class="overlay"></div>
+    </div>
+    
+    
+    <div class="search-bar-container">
+        <div class="search-bar">
+    <select>
+        <option>Kolkata</option>
+        <option>Bangalore</option>
+    </select>
+    <input type="text" placeholder="Search for locality, area, project or builder of the property">
+        <button class="contact-btn" style="font-weight: bold;">Search</button>
+    </a>
+    
+</div>
+</div>
+
+<div class="spotlight" style="padding-bottom: 10px;">
+    <div class="spotlight animate-up">
+        <br>
+        <br>
+        <br>
+      <h2 style="text-align: left; margin-bottom: 40px; font-family: 'Fredoka', sans-serif; font-weight: 900; font-size: 2.5rem; color: #1a1a1a;">&nbsp; IN SPOTLIGHT</h2>
+      
+      <div style="position: relative; padding: 0 60px; max-width: 1400px; margin: 0 auto;margin-bottom: 100px;">
+        <div class="card-container" style="display: flex; gap: 30px; overflow: hidden; padding: 20px 0; scroll-behavior: smooth;">
+          <!-- Card 1 -->
+          <div class="card" style="min-width: calc(50% - 15px); background: rgb(224, 240, 252); border-radius: 15px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.1); transition: all 0.3s ease;">
+            <div style="height: 300px; overflow: hidden; position: relative;">
+              <img src="pexels-beingsanshots-14915303.jpg" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+            </div>
+            <div style="padding: 25px;">
+              <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                <img src="images.png" style="width: 60px; height: 60px; margin-right: 15px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <h3 style="font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 26px; color: #1a1a1a; margin: 0;">GANGA REALTY</h3>
+              </div>
+              <h4 style="font-size: 22px; color: #2c3e50; margin: 0 0 15px 0; font-weight: 600;">ATLANTIS</h4>
+              <p style="font-size: 16px; color: #666; margin: 0 0 20px 0; line-height: 1.5;">DLF IT Park 1, Action Area I, New Town, Kolkata</p>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <span style="font-weight: 700; color: #2c3e50; font-size: 20px;">₹ 2.0 Cr - 2.1 Cr</span>
+                <span style="background: #ffffff; padding: 8px 15px; border-radius: 8px; font-size: 16px; font-weight: 600;">3 BHK</span>
+            </div>
+            <a href="prop5.html">
+              <button style="width: 100%; padding: 15px; background: #6495ED; color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 16px; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px;">
+                View Details
+              </button>
+            </a>
+            </div>
+            
+          </div>
+
+
+  
+          <!-- Card 2 -->
+          <div class="card" style="min-width: calc(50% - 15px); background: rgb(224, 240, 252); border-radius: 15px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.1); transition: all 0.3s ease;">
+            <div style="height: 300px; overflow: hidden; position: relative;">
+              <img src="photo-1717167398817-121e3c283dbb.avif" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+            </div>
+            <div style="padding: 25px;">
+              <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                <img src="skyline-logo-design-style-line-outline-simple-city-building-logo-concept-business-real-estate_625890-183.avif" style="width: 60px; height: 60px; margin-right: 15px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <h3 style="font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 26px; color: #1a1a1a; margin: 0;">SKYLINE ESTATES</h3>
+              </div>
+              <h4 style="font-size: 22px; color: #2c3e50; margin: 0 0 15px 0; font-weight: 600;">CELESTIAL</h4>
+              <p style="font-size: 16px; color: #666; margin: 0 0 20px 0; line-height: 1.5;">17A, Lake View Road, Southern Avenue, Kolkata</p>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <span style="font-weight: 700; color: #2c3e50; font-size: 20px;">₹ 2.9 Cr - 3.0 Cr</span>
+                <span style="background: #ffffff; padding: 8px 15px; border-radius: 8px; font-size: 16px; font-weight: 600;">5 BHK</span>
+            </div>
+            <a href="prop3.html">
+              <button style="width: 100%; padding: 15px; background: #6495ED; color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 16px; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px;">
+                View Details
+              </button>
+            </a>
+            </div>            
+          </div>
+          <!-- Card 3 -->
+
+          <div class="card" style="min-width: calc(50% - 15px); background: rgb(224, 240, 252); border-radius: 15px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.1); transition: all 0.3s ease;">
+    <div style="height: 300px; overflow: hidden; position: relative;">
+      <img src="pexels-rotekirsche-20-3634832-5438780.jpg" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+    </div>
+    <div style="padding: 25px;">
+      <div style="display: flex; align-items: center; margin-bottom: 20px;">
+        <img src="attachment_76199455.jpeg" style="width: 60px; height: 60px; margin-right: 15px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+        <h3 style="font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 26px; color: #1a1a1a; margin: 0;">AURA HABITAT</h3>
+      </div>
+      <h4 style="font-size: 22px; color: #2c3e50; margin: 0 0 15px 0; font-weight: 600;">SKYHIGH</h4>
+      <p style="font-size: 16px; color: #666; margin: 0 0 20px 0; line-height: 1.5;">21/A Hosur Road, Koramangala, Bangalore</p>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <span style="font-weight: 700; color: #2c3e50; font-size: 20px;">₹ 1 Cr - 1.2 Cr</span>
+        <span style="background: #ffffff; padding: 8px 15px; border-radius: 8px; font-size: 16px; font-weight: 600;">3 BHK</span>
+    </div>
+    <a href="error.html">
+      <button style="width: 100%; padding: 15px; background: #6495ED; color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 16px; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px;">
+        View Details
+      </button>
+    </a>
+    </div>
+    
+  </div>
+  
+  <!-- Card 4 -->
+<div class="card" style="min-width: calc(50% - 15px); background: rgb(224, 240, 252); border-radius: 15px; overflow: hidden; box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1); transition: all 0.3s ease;">
+    <div style="height: 300px; overflow: hidden; position: relative;">
+      <img src="annie-spratt-HfCg3eJKlJw-unsplash.jpg" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+    </div>
+    <div style="padding: 25px;">
+      <div style="display: flex; align-items: center; margin-bottom: 20px;">
+        <img src="images1234.jpeg" style="width: 60px; height: 60px; margin-right: 15px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+        <h3 style="font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 26px; color: #1a1a1a; margin: 0;">ZENITH HOMES</h3>
+      </div>
+      <h4 style="font-size: 22px; color: #2c3e50; margin: 0 0 15px 0; font-weight: 600;">GREENVILLE</h4>
+      <p style="font-size: 16px; color: #666; margin: 0 0 20px 0; line-height: 1.5;">46B Park Street Near Metro Station, Kolkata</p>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <span style="font-weight: 700; color: #2c3e50; font-size: 20px;">₹ 75 Lakhs - 80 Lakhs</span>
+        <span style="background: #ffffff; padding: 8px 15px; border-radius: 8px; font-size: 16px; font-weight: 600;">2 BHK</span>
+      </div>
+      <a href="prop2.html">
+        <button style="width: 100%; padding: 15px; background: #6495ED; color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 16px; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px;">
+          View Details
+        </button>
+      </a>
+    </div>
+  </div>
+
+  <!-- Card 5 -->
+<div class="card" style="min-width: calc(50% - 15px); background: rgb(224, 240, 252); border-radius: 15px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.1); transition: all 0.3s ease;">
+    <div style="height: 300px; overflow: hidden; position: relative;">
+      <img src="3adeeb1a1fd2745655a60c27fa8e5d96-cc_ft_960.jpg" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+    </div>
+    <div style="padding: 25px;">
+      <div style="display: flex; align-items: center; margin-bottom: 20px;">
+        <img src="bill.png" style="width: 60px; height: 60px; margin-right: 15px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+        <h3 style="font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 26px; color: #1a1a1a; margin: 0;">BILL PROPERTIES</h3>
+      </div>
+      <h4 style="font-size: 22px; color: #2c3e50; margin: 0 0 15px 0; font-weight: 600;">LAKESIDE</h4>
+      <p style="font-size: 16px; color: #666; margin: 0 0 20px 0; line-height: 1.5;">43/4 Hebbal Village, Ballari Road, Bangalore</p>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <span style="font-weight: 700; color: #2c3e50; font-size: 20px;">₹ 60 Lakhs - 65 Lakhs</span>
+        <span style="background: #ffffff; padding: 8px 15px; border-radius: 8px; font-size: 16px; font-weight: 600;">3 BHK</span>
+    </div>
+    <a href="error.html">
+      <button style="width: 100%; padding: 15px; background: #6495ED; color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 16px; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px;">
+        View Details
+      </button>
+    </a>
+    </div>
+    
+  </div>
+  
+  
+          <!-- Additional cards (initially hidden) -->
+          <!-- Similar structure for cards 3-5 -->
+          <button onclick="scrollCards('left')" class="nav-button" 
+          style="position: absolute; left: -100px; top: 50%; transform: translateY(-50%); background: white; border: none; border-radius: 50%; width: 50px; height: 50px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 24px; z-index: 10;">
+    ❮
+  </button>
+  <button onclick="scrollCards('right')" class="nav-button" 
+          style="position: absolute; right: -100px; top: 50%; transform: translateY(-50%); background: white; border: none; border-radius: 50%; width: 50px; height: 50px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 24px; z-index: 10;">
+    ❯
+  </button>
+    </div>
+  </div>
+  
+<button id="open-slider" class="nav-btn"></button>
+
+
+
+
+<section class="recommended-sellers">
+    <div class="recommended-sellers animate-up ">
+        
+    <h2>RECOMMENDED SELLERS</h2>
+    <div class="sellers-container">
+        <!-- Card 1 -->
+        <div class="seller-card">
+            <img src="220px-Harry_Primrose,_Lord_Dalmeny.jpg" alt="John Smith" class="seller-image">
+            <h3 class="seller-name">John Smith</h3>
+            <p class="seller-title">Premium Property Expert</p>
+            <div class="seller-stats">
+                <div class="stat">
+                    <div class="stat-number">150+</div>
+                    <div class="stat-label">Properties</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+            </div>
+            <div class="seller-rating">
+                ★★★★★
+                <span style="font-size: 16px; color: #6c757d;">(4.9)</span>
+            </div>
+            <button class="contact-btn" onclick="window.location.href='customer.html'">Contact Agent</button>        </div>
+
+        <!-- Card 2 -->
+        <div class="seller-card">
+            <img src="b774fd854e367926512a11fff0a5905c.jpg" alt="Sarah Johnson" class="seller-image">
+            <h3 class="seller-name">Sarah Johnson</h3>
+            <p class="seller-title">Luxury Home Specialist</p>
+            <div class="seller-stats">
+                <div class="stat">
+                    <div class="stat-number">200+</div>
+                    <div class="stat-label">Properties</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+            </div>
+            <div class="seller-rating">
+                ★★★★★
+                <span style="font-size: 16px; color: #6c757d;">(4.8)</span>
+            </div>
+            <button class="contact-btn" onclick="window.location.href='customer.html'">Contact Agent</button>        </div>
+
+        <!-- Card 3 -->
+        <div class="seller-card">
+            <img src="young-adult-man-wearing-hoodie-beanie_23-2149393636.avif"" alt="Michael Brown" class="seller-image">
+            <h3 class="seller-name">Michael Brown</h3>
+            <p class="seller-title">Commercial Expert</p>
+            <div class="seller-stats">
+                <div class="stat">
+                    <div class="stat-number">180+</div>
+                    <div class="stat-label">Properties</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">97%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+            </div>
+            <div class="seller-rating">
+                ★★★★★
+                <span style="font-size: 16px; color: #6c757d;">(4.9)</span>
+            </div>
+            <button class="contact-btn" onclick="window.location.href='customer.html'">Contact Agent</button>        </div>
+
+        <!-- Card 4 -->
+        <div class="seller-card">
+            <img src="feeling-displeased-disappointed-looking-serious-annoyed-angry-with-crossed-arms_1194-529327.avif" alt="Jennifer Lee" class="seller-image">
+            <h3 class="seller-name">Jennifer Lee</h3>
+            <p class="seller-title">Urban Property Specialist</p>
+            <div class="seller-stats">
+                <div class="stat">
+                    <div class="stat-number">165+</div>
+                    <div class="stat-label">Properties</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">96%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+            </div>
+            <div class="seller-rating">
+                ★★★★★
+                <span style="font-size: 16px; color: #6c757d;">(4.8)</span>
+            </div>
+            <button class="contact-btn" onclick="window.location.href='customer.html'">Contact Agent</button>        </div>
+
+        <!-- Card 5 -->
+        <div class="seller-card">
+            <img src="random-guy-picture-9688def1_0_m.webp" alt="David Wilson" class="seller-image">
+            <h3 class="seller-name">David Wilson</h3>
+            <p class="seller-title">Investment Property Expert</p>
+            <div class="seller-stats">
+                <div class="stat">
+                    <div class="stat-number">190+</div>
+                    <div class="stat-label">Properties</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">94%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+            </div>
+            <div class="seller-rating">
+                ★★★★★
+                <span style="font-size: 16px; color: #6c757d;">(4.7)</span>
+            </div>
+            <button class="contact-btn" onclick="window.location.href='customer.html'">Contact Agent</button>        </div>
+
+        <!-- Card 6 -->
+        <div class="seller-card">
+            <img src="close-up-studio-portrait-young-displeased-woman-biting-her-lips-with-dissatisfaction_273609-13821.avif" alt="Emma Davis" class="seller-image">
+            <h3 class="seller-name">Emma Davis</h3>
+            <p class="seller-title">Residential Specialist</p>
+            <div class="seller-stats">
+                <div class="stat">
+                    <div class="stat-number">175+</div>
+                    <div class="stat-label">Properties</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+            </div>
+            <div class="seller-rating">
+                ★★★★★
+                <span style="font-size: 16px; color: #6c757d;">(4.9)</span>
+            </div>
+            <button class="contact-btn" onclick="window.location.href='customer.html'">Contact Agent</button>        </div>
+
+        <!-- Card 7 -->
+        <div class="seller-card">
+            <img src="premium_photo-1689530775582-83b8abdb5020.jpg" alt="Robert Chen" class="seller-image">
+            <h3 class="seller-name">Robert Chen</h3>
+            <p class="seller-title">Luxury Estate Agent</p>
+            <div class="seller-stats">
+                <div class="stat">
+                    <div class="stat-number">210+</div>
+                    <div class="stat-label">Properties</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">97%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+            </div>
+            <div class="seller-rating">
+                ★★★★★
+                <span style="font-size: 16px; color: #6c757d;">(4.8)</span>
+            </div>
+            <button class="contact-btn" onclick="window.location.href='customer.html'">Contact Agent</button>        </div>
+
+        <!-- Card 8 -->
+        <div class="seller-card">
+            <img src="frowning-young-beautiful-girl-wearing-party-hat_141793-127113.avif" alt="Lisa Anderson" class="seller-image">
+            <h3 class="seller-name">Lisa Anderson</h3>
+            <p class="seller-title">Commercial Property Expert</p>
+            <div class="seller-stats">
+                <div class="stat">
+                    <div class="stat-number">185+</div>
+                    <div class="stat-label">Properties</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+            </div>
+            <div class="seller-rating">
+                ★★★★★
+                <span style="font-size: 16px; color: #6c757d;">(4.7)</span>
+            </div>
+            <button class="contact-btn" onclick="window.location.href='customer.html'">Contact Agent</button>        </div>
+
+        <!-- Card 9 -->
+        <div class="seller-card">
+            <img src="bearded-sailor-dressed-red-hat-yellow-anorak-posing-against-blue-wall-serious-man-with-beard-having-blue-charming-eyes_273609-8099.avif" alt="James Taylor" class="seller-image">
+            <h3 class="seller-name">James Taylor</h3>
+            <p class="seller-title">Urban Development Specialist</p>
+            <div class="seller-stats">
+                <div class="stat">
+                    <div class="stat-number">195+</div>
+                    <div class="stat-label">Properties</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">96%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+            </div>
+            <div class="seller-rating">
+                ★★★★★
+                <span style="font-size: 16px; color: #6c757d;">(4.8)</span>
+            </div>
+            <button class="contact-btn" onclick="window.location.href='customer.html'">Contact Agent</button>        </div>
+
+        <!-- Card 10 -->
+        <div class="seller-card">
+            <img src="hoyeon-jung-south-korea-.webp" alt="Maria Garcia" class="seller-image">
+            <h3 class="seller-name">Maria Garcia</h3>
+            <p class="seller-title">Residential Expert</p>
+            <div class="seller-stats">
+                <div class="stat">
+                    <div class="stat-number">170+</div>
+                    <div class="stat-label">Properties</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+            </div>
+            <div class="seller-rating">
+                ★★★★★
+                <span style="font-size: 16px; color: #6c757d;">(4.9)</span>
+            </div>
+            <button class="contact-btn" onclick="window.location.href='customer.html'">Contact Agent</button>        </div>
+
+      
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="scroll-buttons">
+    <button class="scroll-btn" onclick="scrollLeft()">&#10094;</button>
+    <button class="scroll-btn" onclick="scrollRight()">&#10095;</button>
+</div>
+</section>
+
+
+
+<footer>
+    <div class="column">
+        <h3>Our Brands</h3>
+        <br>
+        <ul>
+            <li><a href="#">Real estate in Mumbai</a></li>
+            <li><a href="#">Real estate in Bengaluru</a></li>
+            <li><a href="#">Real estate in Hyderabad</a></li>
+            <li><a href="#">Real estate in Pune</a></li>
+            <li><a href="#">Real estate in Chennai</a></li>
+            <li><a href="#">Real estate in Delhi</a></li>
+            <!-- Add more items here -->
+        </ul>
+    </div>
+    <div class="column">
+        <h3>Flats for Purchase</h3>
+        <br>
+        <ul>
+            <li><a href="#">Flats in Mumbai</a></li>
+            <li><a href="#">Flats in Bengaluru</a></li>
+            <li><a href="#">Flats in Hyderabad</a></li>
+            <li><a href="#">Flats in Pune</a></li>
+            <li><a href="#">Flats in Chennai</a></li>
+            <li><a href="#">Flats in Delhi</a></li>
+            <!-- Add more items here -->
+        </ul>
+    </div>
+    <div class="column">
+        <h3>New Projects</h3>
+        <br>
+        <ul>
+            <li><a href="#">New Projects in Mumbai</a></li>
+            <li><a href="#">New Projects in Bengaluru</a></li>
+            <li><a href="#">New Projects in Hyderabad</a></li>
+            <li><a href="#">New Projects in Pune</a></li>
+            <li><a href="#">New Projects in Chennai</a></li>
+            <li><a href="#">New Projects in Delhi</a></li>
+            <!-- Add more items here -->
+        </ul>
+    </div>
+    <div class="column">
+        <h3>Commercial Property</h3>
+        <br>
+        <ul>
+            <li><a href="#">Commercial Property in Mumbai</a></li>
+            <li><a href="#">Commercial Property in Bengaluru</a></li>
+            <li><a href="#">Commercial Property in Hyderabad</a></li>
+            <li><a href="#">Commercial Property in Pune</a></li>
+            <li><a href="#">Commercial Property in Chennai</a></li>
+            <li><a href="#">Commercial Property in Delhi</a></li>
+            <!-- Add more items here -->
+        </ul>
+    </div>
+</footer>
+
+<div class="footer-bottom" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; background-color: #080a13;">
+    <!-- Logo and Text Container -->
+    <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
+        <img src="Blue Watercolor Dream Big Inspirational Poster (7).png" alt="Logo" style="width: auto; height: 50px; margin-right: 10px;">
+        <div class="logo" style="font-family: 'Yeseva One', sans-serif; font-weight: bolder; font-size: 30px; color: rgb(255, 255, 255); margin: 0; display: flex; align-items: baseline;">
+            APARTMENTS. <span style="font-size: 20px; font-family: 'Archivo Black', sans-serif; margin-left: 5px;">COM</span>
+        </div>
+    </div>
+    <!-- Footer Text Links -->
+    <div style="text-align: center; color: rgb(255, 255, 255);">
+        <br>
+        <p>©2012-24 Locon Solutions Pvt. Ltd</p>
+        <br>
+        <div class="footer-box">
+            <p class="footer-links">
+                Careers | About Us | Contact Us |
+                <a href="terms.html" style="text-decoration: none; color: white;">Terms & Conditions |</a>
+                <a href="policy.html" style="text-decoration: none; color: white;">Privacy Policy</a>
+
+            </p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+
+
+<script>
+    const openSliderBtn = document.getElementById('hello-btn');
+    const slider = document.getElementById('account-slider');
+    const body = document.body;
+
+    const overlay = document.createElement('dwiv');
+    overlay.classList.add('overlay');
+    body.appendChild(overlay);
+
+    function openSlider() {
+        slider.classList.add('open');
+        overlay.style.display = 'block';
+    }
+
+    function closeSlider() {
+        slider.classList.remove('open');
+        overlay.style.display = 'none';
+    }
+
+    overlay.addEventListener('click', closeSlider);
+
+    openSliderBtn.addEventListener('click', openSlider);
+
+    slider.addEventListener('click', function(event) {
+        if (event.target.classList.contains('close-slider-btn')) {
+            closeSlider();
+        }
+    });
+
+    let currentIndex = 0;
+    const cards = document.querySelectorAll('.card');
+    const cardWidth = cards[0].offsetWidth + 30;
+  
+    function scrollCards(direction) {
+        const container = document.querySelector('.card-container');
+        const maxIndex = cards.length - 2;
+        
+        if (direction === 'left') {
+            currentIndex = Math.max(0, currentIndex - 2);
+        } else {
+            currentIndex = Math.min(maxIndex, currentIndex + 2);
+        }
+        
+        container.scrollTo({
+            left: currentIndex * cardWidth,
+            behavior: 'smooth'
+        });
+    }
+</script>
+
+<script>
+const sellersContainer = document.querySelector('.sellers-container');
+const scrollLeftBtn = document.querySelector('.scroll-btn:first-child');
+const scrollRightBtn = document.querySelector('.scroll-btn:last-child');
+
+function updateScrollButtons() {
+    // Check if at the far left
+    scrollLeftBtn.disabled = sellersContainer.scrollLeft <= 0;
+    // Check if at the far right
+    scrollRightBtn.disabled = sellersContainer.scrollLeft + sellersContainer.clientWidth >= sellersContainer.scrollWidth - 1;
+}
+
+function scrollLeft() {
+    // Scrolls left by the width of one card (assuming each card is 300px wide)
+    sellersContainer.scrollBy({
+        left: -300,
+        behavior: 'smooth'
+    });
+    setTimeout(updateScrollButtons, 300); // Update buttons after scrolling
+}
+
+function scrollRight() {
+    // Scrolls right by the width of one card (assuming each card is 300px wide)
+    sellersContainer.scrollBy({
+        left: 300,
+        behavior: 'smooth'
+    });
+    setTimeout(updateScrollButtons, 300); // Update buttons after scrolling
+}
+
+// Update button states on load and after scroll
+sellersContainer.addEventListener('scroll', updateScrollButtons);
+window.addEventListener('load', updateScrollButtons);
+
+// Add click event listeners to the buttons
+scrollLeftBtn.addEventListener('click', scrollLeft);
+scrollRightBtn.addEventListener('click', scrollRight);
+
+window.onload = function() {
+            const searchButton = document.querySelector('.search-bar button');
+            const citySelect = document.querySelector('.search-bar select');
+        
+            // Ensure elements are selected correctly
+            if (!searchButton || !citySelect) {
+                console.error("Search button or city select dropdown not found.");
+                return;
+            }
+        
+            searchButton.addEventListener('click', function() {
+                const city = citySelect.value;
+                
+                if (city === 'Kolkata') {
+                    window.location.href = 'list.html'; // Replace with Kolkata URL
+                } else if (city === 'Bangalore') {
+                    window.location.href = 'list2.html'; // Replace with Bangalore URL
+                } else if (city === 'Delhi') {
+                    window.location.href = 'list3.html'; // Replace with Delhi URL
+                } else {
+                    console.error("Unknown city selected: ", city);
+                }
+            });
+        };
+</script>

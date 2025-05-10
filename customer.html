@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHAT WITH SELLER</title>
+    <style>
+        body, html {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        .bg {
+            background-image: url('shiny-night-city.jpg');
+            height: 100vh;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .title {
+            font-size: 2.5em;
+            font-weight: 800;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 20px;
+        }
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .chat-window {
+            padding: 20px;
+        }
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 5px;
+        }
+        .message {
+            max-width: 70%;
+            padding: 8px 12px;
+            margin-bottom: 10px;
+            border-radius: 20px;
+            clear: both;
+            word-wrap: break-word;
+        }
+        .user-message {
+            background: #5fb3e4;
+            color: white;
+            float: right;
+        }
+        .bot-message {
+            background: rgb(226, 222, 233);
+            float: left;
+        }
+        .user-input {
+            display: flex;
+            padding: 10px 0;
+        }
+        .user-input input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px 0 0 5px;
+        }
+        .user-input button {
+            padding: 10px 20px;
+            background: #5fb3e4;
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+        .user-input button:hover {
+            background: #4a9bd4;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg">
+        <div class="container">
+            <div class="chat-window">
+                <div class="chat-messages" id="chatMessages">
+                    
+                </div>
+                <div class="user-input">
+                    <input type="text" id="userInput" placeholder="Type your message here...">
+                    <button onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            if (message) {
+                addMessage(message, 'user-message');
+                input.value = '';
+                setTimeout(() => botReply(message), 1000);
+            }
+        }
+
+        function addMessage(text, className) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${className}`;
+            messageDiv.textContent = text;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function botReply(userMessage) {
+            let reply = "The text didn't come through properly. Please send again. ";
+            
+            if (userMessage.toLowerCase().includes('hello') || userMessage.toLowerCase().includes('hi')) {
+    reply = "Hi there! Thanks for reaching out. How can I assist you with your property search today?";
+} else if (userMessage.toLowerCase().includes('how are you')) {
+    reply = "I’m doing great, thank you! How about you?";
+} else if (userMessage.toLowerCase().includes('i am fine') || userMessage.toLowerCase().includes('i am good')) {
+    reply = "That’s great to hear! Let’s find you the perfect property. What are you looking for today?";
+} else if (userMessage.toLowerCase().includes('tell me about this property')) {
+    reply = "Sure! This property has xxx bedrooms and xxx bathrooms, a modern kitchen, and a spacious backyard. You can also check out the photo gallery on this page. What do you think so far?";
+} else if (userMessage.toLowerCase().includes('what is the price')) {
+    reply = "The listed price is $xxx,xxx. There’s a mortgage calculator on this page if you’d like to explore payment options. Does that fit your budget?";
+} else if (userMessage.toLowerCase().includes('good')) {
+    reply = "Great. Anything Else?";
+} else if (userMessage.toLowerCase().includes('thank you') || userMessage.toLowerCase().includes('thanks')) {
+    reply = "You’re welcome! If you have more questions, just let me know. I’m here to help!";
+} else if (userMessage.toLowerCase().includes('how old is the property')) {
+    reply = "This property was built in xxxx, so it’s about xxx years old. It’s in great condition";
+} else if (userMessage.toLowerCase().includes('what about schools nearby')) {
+    reply = "There are top-rated schools nearby, including xxx Elementary and xxx High School.";
+} else if (userMessage.toLowerCase().includes('can i visit the property')) {
+    reply = "I will let you know later.";
+} else if (userMessage.toLowerCase().includes('goodbye') || userMessage.toLowerCase().includes('bye')) {
+    reply = "Goodbye! It was great chatting with you. Let me know if you need anything else. Have a wonderful day!";
+} else if (userMessage.toLowerCase().includes('how is the neighborhood')) {
+    reply = "The neighborhood is peaceful and family-friendly, with lots of parks and amenities nearby. Check out the ‘Neighborhood Insights’ section for more info. Does that sound good to you?";
+} else if (userMessage.toLowerCase().includes('can i negotiate the price')) {
+    reply = "Yes, we’re open to offers! Let’s work something out.";
+} else if (userMessage.toLowerCase().includes('are there any extra fees')) {
+    reply = "Besides the purchase price, there’s a closing fee of xxx% and potentially agent commissions.";
+} else if (userMessage.toLowerCase().includes('how is the internet connectivity')) {
+    reply = "The internet connectivity is excellent, with speeds up to xxx Mbps available. Providers are listed under the 'Utilities' section.";
+} else if (userMessage.toLowerCase().includes('are pets allowed')) {
+    reply = "Pets are welcome! This property even has a fenced backyard, making it great for outdoor pets. Let me know if you have specific needs.";
+}
+
+
+            addMessage(reply, 'bot-message');
+        }
+
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>

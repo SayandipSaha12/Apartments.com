@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Live Property Auction</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: white;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .auction-header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .property-title {
+            font-size: 32px;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+            font-weight: 800;
+            background: linear-gradient(45deg, #1a2a6c, #b21f1f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .property-details {
+            color: #555;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        .video-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .video-placeholder {
+            background: linear-gradient(45deg, #2c3e50, #3498db);
+            width: 100%;
+            height: 400px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            margin-bottom: 20px;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.3);
+        }
+
+        .auctioneer {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0,0,0,0.05);
+            border-radius: 15px;
+        }
+
+        .auctioneer img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 15px;
+            border: 3px solid white;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        .bidding-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .current-bid {
+            font-size: 48px;
+            font-weight: 800;
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .bid-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .bid-input {
+            padding: 20px;
+            border: 2px solid rgba(0,0,0,0.1);
+            border-radius: 15px;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.9);
+        }
+
+        .bid-input:focus {
+            border-color: #2ecc71;
+            box-shadow: 0 0 15px rgba(46,204,113,0.3);
+            outline: none;
+        }
+
+        .bid-button {
+            padding: 20px;
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(46,204,113,0.3);
+        }
+
+        .bid-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(46,204,113,0.4);
+        }
+
+        .bid-button:active {
+            transform: translateY(1px);
+        }
+
+        .bid-history {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 15px;
+            background: rgba(0,0,0,0.05);
+            border-radius: 15px;
+        }
+
+        .bid-history::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .bid-history::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+            border-radius: 4px;
+        }
+
+        .bid-history::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.2);
+            border-radius: 4px;
+        }
+
+        .bid-item {
+            padding: 15px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            animation: slidein 0.3s ease-out;
+            background: rgba(255,255,255,0.8);
+            margin-bottom: 10px;
+            border-radius: 10px;
+            transition: transform 0.2s ease;
+        }
+
+        .bid-item:hover {
+            transform: translateX(5px);
+        }
+
+        @keyframes slidein {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .timer {
+            font-size: 36px;
+            font-weight: 800;
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+
+        .status-bar {
+            background: linear-gradient(45deg, #34495e, #2c3e50);
+            color: white;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .live-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #e74c3c;
+            border-radius: 50%;
+            margin-right: 10px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .property-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: rgba(0,0,0,0.05);
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="auction-header">
+            <h1 class="property-title">Luxury Beachfront Villa - Miami, FL</h1>
+            <p class="property-details">Stunning oceanfront property with private beach access</p>
+            <div class="property-stats">
+                <div class="stat-item">
+                    <div class="stat-value">5</div>
+                    <div class="stat-label">Bedrooms</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">6</div>
+                    <div class="stat-label">Bathrooms</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">6,500</div>
+                    <div class="stat-label">Sq Ft</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">0.75</div>
+                    <div class="stat-label">Acres</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="video-section">
+                <div class="video-placeholder">
+                    Live Auction Stream
+                </div>
+                <div class="status-bar">
+                    <span class="live-indicator"></span>
+                    Live: 234 participants watching
+                </div>
+                <div class="auctioneer">
+                    <img src="/api/placeholder/60/60" alt="Auctioneer">
+                    <div>
+                        <h3>John Smith</h3>
+                        <p>Lead Auctioneer, Elite Property Sales</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bidding-section">
+                <div class="timer">05:23</div>
+                <div class="current-bid">$4,250,000</div>
+                <form class="bid-form">
+                    <input type="number" class="bid-input" placeholder="Enter your bid amount" min="4300000" step="50000">
+                    <button type="submit" class="bid-button">Place Bid</button>
+                </form>
+                <h3>Recent Bids</h3>
+                <div class="bid-history" id="bidHistory">
+                    <!-- Bids will be added here dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simulated bid data
+        const bidders = [
+            'Alex M.', 'Sarah K.', 'John D.', 'Emma W.', 'Michael P.',
+            'Lisa R.', 'David B.', 'Julia S.', 'Robert L.', 'Maria G.'
+        ];
+
+        let currentBid = 4250000;
+        const bidHistory = document.getElementById('bidHistory');
+        const currentBidDisplay = document.querySelector('.current-bid');
+        const timer = document.querySelector('.timer');
+        let timeLeft = 323; // 5:23 in seconds
+
+        // Timer function
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timer.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            timeLeft--;
+            if (timeLeft < 0) timeLeft = 323; // Reset timer for demo purposes
+        }
+
+        // Add new bid with smooth animation
+        function addBid() {
+            const bidIncrease = Math.floor(Math.random() * 5 + 1) * 50000;
+            const newBid = currentBid + bidIncrease;
+            const bidder = bidders[Math.floor(Math.random() * bidders.length)];
+            
+            const bidItem = document.createElement('div');
+            bidItem.className = 'bid-item';
+            bidItem.innerHTML = `
+                <span>${bidder}</span>
+                <span>$${newBid.toLocaleString()}</span>
+            `;
+            
+            bidHistory.insertBefore(bidItem, bidHistory.firstChild);
+            if (bidHistory.children.length > 10) {
+                bidHistory.removeChild(bidHistory.lastChild);
+            }
+            
+            currentBid = newBid;
+            currentBidDisplay.textContent = `$${currentBid.toLocaleString()}`;
+            
+            // Add highlighting animation
+            bidItem.style.animation = 'none';
+            bidItem.offsetHeight; // Trigger reflow
+            bidItem.style.animation = null;
+        }
+
+        // Handle bid form submission
+        document.querySelector('.bid-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const bidInput = document.querySelector('.bid-input');
+            const bidAmount = parseInt(bidInput.value);
+            
+            if (bidAmount > currentBid) {
+                currentBid = bidAmount;
+                currentBidDisplay.textContent = `$${currentBid.toLocaleString()}`;
+                
+                const bidItem = document.createElement('div');
+                bidItem.className = 'bid-item';
+                bidItem.innerHTML = `
+                    <span>You</span>
+                    <span>$${bidAmount.toLocaleString()}</span>
+                `;
+                bidHistory.insertBefore(bidItem, bidHistory.firstChild);
+                bidInput.value = '';
+            } else {
+                alert('Your bid must be higher than the current bid!');
+            }
+        });
+
+        // Simulate incoming bids
+        setInterval(addBid, Math.random() * 3000 + 2000);
+        
+        // Update timer
+        setInterval(updateTimer, 1000);
+
+        // Initial bid history
+        for (let i = 0; i < 5; i++) {
+            addBid();
+        }
+    </script>
+</body>
+</html>

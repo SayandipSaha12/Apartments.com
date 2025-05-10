@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cozy Studio Apartment</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #34495e;
+            --accent: #e74c3c;
+            --gold: #f39c12;
+            --text: #2c3e50;
+            --light: #ecf0f1;
+            --gradient: linear-gradient(135deg, #2c3e50, #34495e);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: #f9fafb;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .hero-section {
+            position: relative;
+            height: 80vh;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 8s ease;
+        }
+
+        .hero-section:hover .hero-image {
+            transform: scale(1.1);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.7));
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            color: white;
+        }
+
+        .property-title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .property-location {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .price-tag {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: rgba(255,255,255,0.9);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            color: var(--primary);
+            font-size: 1.5rem;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            height: 200px;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .main-content {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--light);
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: rgb(66, 148, 224);
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .agent-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .agent-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .agent-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .contact-btn {
+            background: linear-gradient(135deg, #6bbdf8 0%, #3a8dca 100%);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            width: 100%;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .stat-card {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: rgb(85, 162, 224);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            padding: 2rem;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .modal-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            position: relative;
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -2rem;
+            right: -2rem;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+        }
+
+        .close-modal:hover {
+            color: #ddd;
+        }
+
+        .gallery-item {
+            cursor: zoom-in;
+        }
+
+        .property-additional-info {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.rating-section {
+    background: var(--light);
+    padding: 1.5rem;
+    border-radius: 15px;
+}
+
+.rating-section h3 {
+    margin-bottom: 0.5rem;
+}
+
+.stars {
+    color: var(--gold);
+}
+
+.auction-badge {
+    background: linear-gradient(135deg, #6bbdf8 0%, #3a8dca 100%);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            width: 100%;
+            font-weight: bold;
+            text-decoration: none; /* Ensures the text doesn't get underlined if used as a link */
+          transition: background 0.3s ease, transform 0.3s ease; /* Smooth transition */
+    width: 180px;
+}
+
+.auction-badge i {
+    font-size: 1.4rem;
+}
+
+.auction-badge span {
+    flex-grow: 1;
+}
+
+.auction-badge:hover {
+    transform: translateY(-3px); /* Adds smooth hover effect */
+}    
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="hero-section">
+            <img src="shutterstock_1144300976.jpg" alt="Luxury Property" class="hero-image">
+            <div class="hero-overlay">
+                <h1 class="property-title">Cozy Studio Apartment</h1>
+                <div class="property-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    10/B Camac Street, Elgin, Kolkata- 700017
+                </div>
+                <div class="price-tag">₹50,00,000</div>
+            </div>
+        </section>
+
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src= "deborah-cortelazzi-gREquCUXQLI-unsplash.jpg" alt="Living Room">
+            </div>
+            <div class="gallery-item">
+                <img src="pexels-heyho-8089192.jpg" alt="Kitchen">
+            </div>
+            <div class="gallery-item">
+                <img src="pexels-pixabay-271618.jpg" alt="Bedroom">
+            </div>
+            <div class="gallery-item">
+                <img src="pexels-carlnewton-2280148.jpg" alt="Pool">
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <main class="main-content">
+                <h2>Property Overview</h2>
+                <br>
+                <p> Experience modern living at its best in this beautifully designed 2BHK flat. Featuring elegant architecture and thoughtful design, this home combines style and functionality. The open floor plan maximizes space and natural light, creating a warm and inviting atmosphere.</p>
+                <br>
+                <p>This residence includes spacious bedrooms, a contemporary kitchen with high-quality finishes, and a cozy living area perfect for relaxation. Enjoy the convenience of open parking, complimentary superfast WiFi, and a location that blends comfort with connectivity. Whether you're working from home or entertaining guests, this flat offers everything you need for a comfortable and stylish lifestyle</p>
+                                
+                <div class="features-list">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bed"></i>
+                        </div>
+                        <div>
+                            <h3>1 Bedroom</h3>
+                            <p>Spacious Suite</p>
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-car"></i>
+                        </div>
+                        <div>
+                            <h3>Parking Area</h3>
+                            <p>Secure Parking</p>
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-elevator"></i>
+                        </div>
+                        <div>
+                            <h3>Elevator</h3>
+                            <p>Glass View</p>
+                        </div>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-wifi"></i>
+                        </div>
+                        <div>
+                            <h3>Free Wifi</h3>
+                            <p>Superfast Internet</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="property-additional-info">
+                    <div class="rating-section">
+                        <h3>Property Rating</h3>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i> <!-- Empty star -->
+                            <span style="color: #34495e; margin-left: 10px">(4/5 from 26 reviews)</span>
+                        </div>
+                    </div>
+<br> <br> <br>
+<a href="info.html" class="auction-badge">
+    <i class="fas fa-dollar"></i>
+    <span>&nbsp; Purchase Now</span>
+</a>
+
+
+            </main>
+
+            <aside class="sidebar">
+                <div class="agent-card">
+                    <div class="agent-profile">
+                        <img src="https://randomuser.me/api/portraits/men/49.jpg" alt="Agent" class="agent-avatar">
+                        <div>
+                            <h3>Gawain Alberts</h3>
+                            <p>Property Dealer</p>
+                        </div>
+                    </div>
+                    <div class="agent-profile">
+                        <img src="Screenshot 2024-09-15 141921.png" alt="Agent" class="agent-avatar">
+                        <div>
+                            <h3>Bill Properties</h3>
+                            <p>Builder Company</p>
+                        </div>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value">110+</div>
+                            <div>Properties Sold</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">4.5</div>
+                            <div>Rating</div>
+                        </div>
+                    </div>
+                    <button class="contact-btn" onclick="location.href='customer.html';">Contact Owner</button>
+                </div>
+
+                <div class="agent-card">
+                    <h3>Property Details</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value">600</div>
+                            <div>Square Feet</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">2014</div>
+                            <div>Built Year</div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <div class="modal" id="imageModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+            <img src="" alt="Full size image" id="modalImage">
+        </div>
+    </div>
+
+    <script>
+        // Simplified modal functionality
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+
+        function openModal(imageSrc) {
+            modal.style.display = 'flex';
+            modalImg.src = imageSrc;
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        // Add click handlers to gallery images
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const imageSrc = item.querySelector('img').src;
+                openModal(imageSrc);
+            });
+        });
+
+        // Close modal when clicking outside the image
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

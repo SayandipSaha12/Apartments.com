@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: url('shiny-night-city.jpg') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .success-container {
+            max-width: 600px;
+            width: 100%;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            background: #4BB543;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        .success-icon i {
+            color: white;
+            font-size: 50px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            font-weight: 300;
+            animation: fadeIn 0.5s ease-out 0.3s both;
+        }
+
+        .token-container {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 1px solid rgba(0,0,0,0.05);
+            animation: slideUp 0.5s ease-out 0.6s both;
+        }
+
+        .token-id {
+            font-size: 24px;
+            color: #3498db;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin: 15px 0;
+        }
+
+        .details {
+            text-align: left; /* Align text to the left */
+            color: #555;
+            margin: 20px 0;
+            line-height: 1.8;
+            font-size: 1rem;
+            animation: fadeIn 0.5s ease-out 0.9s both;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #6bbdf8 0%, #3a8dca 100%);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s ease, background 0.3s ease;
+            animation: fadeIn 0.5s ease-out 1.2s both;
+        }
+
+        .back-button:hover {
+            background: linear-gradient(135deg, #3a8dca 0%, #6bbdf8 100%);
+            transform: translateY(-2px);
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <div class="success-icon">
+            <i class="fas fa-check"></i>
+        </div>
+        <h1>Payment Successful!</h1>
+        <div class="token-container">
+            <p>Your Property ID</p>
+            <div class="token-id" id="tokenId">Loading...</div>
+        </div>
+        <div class="details">
+            <p><i class="fas fa-envelope"></i> A confirmation email has been sent to your registered email address.</p>
+            <p><i class="fas fa-calendar"></i> Press Continue to proceed to the next step & fill out the details.</p>
+            <p><i class="fas fa-info-circle"></i> Please save your Property ID for future reference in case of emergency.</p>
+            <br>
+        </div>
+        <a href="sell_info.html" class="back-button">
+            <p style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Continue</p>
+        </a>
+    </div>
+
+    <script>
+        // Function to generate random token ID
+        function generateTokenId() {
+            const prefix = "PROP";
+            const timestamp = new Date().getTime().toString().slice(-6);
+            const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+            return `${prefix}-${timestamp}-${random}`;
+        }
+
+        // Set random token ID when page loads
+        window.onload = function() {
+            document.getElementById('tokenId').textContent = generateTokenId();
+        }
+    </script>
+</body>
+</html>

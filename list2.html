@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Property Listings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+  :root {
+  --primary-color: #4c8dd6;
+  --background-color: #F4F6F9;
+  --text-color: #333;
+  --card-border-radius: 15px;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+}
+
+nav {
+    background: linear-gradient(135deg, #6bbdf8 0%, #3a8dca 100%);
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  margin: 0 15px;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+}
+
+nav .home-btn {
+  color: white;
+  font-size: 20px;
+  margin-right: auto;
+  text-decoration: none;
+  padding: 8px 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+}
+
+nav a:hover, .home-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+nav a.active {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.container {
+  display: flex;
+  padding: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+  gap: 30px;
+}
+
+.filter-sidebar {
+  background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  padding: 30px;
+  width: 300px;
+  position: sticky;
+  top: 90px;
+  height: fit-content;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.filter-section {
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.filter-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.filter-sidebar h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.filter-sidebar h3::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: var(--primary-color);
+}
+
+.filter-sidebar h4 {
+  font-size: 16px;
+  font-weight: 500;
+  color: #34495e;
+  margin: 15px 0 12px;
+}
+
+.filter-sidebar label {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  padding: 8px 12px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+}
+
+.filter-sidebar label:hover {
+  background-color: #f0f4f8;
+  color: var(--primary-color);
+}
+
+.filter-sidebar input[type="checkbox"] {
+  margin-right: 10px;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--primary-color);
+}
+
+.price-range {
+  padding: 0 10px;
+}
+
+.price-range input[type="range"] {
+  width: 100%;
+  height: 5px;
+  background: #e0e6ed;
+  border-radius: 5px;
+  outline: none;
+  opacity: 0.9;
+  transition: opacity 0.2s;
+  margin: 10px 0;
+  accent-color: var(--primary-color);
+}
+
+.price-range input[type="range"]:hover {
+  opacity: 1;
+}
+
+.property-list {
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 30px;
+  align-items: start;
+}
+
+.property-card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  height: 600px;
+}
+
+.property-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.property-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.property-card:hover img {
+  transform: scale(1.05);
+}
+
+.property-details {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  position: relative;
+  padding: 25px;
+}
+
+.property-details h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 15px 0;
+}
+
+.property-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.property-info span {
+  background: #f8f9fa;
+  color: #34495e;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.property-info span:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.button-wrapper {
+  margin-top: auto;
+  padding-top: 20px;
+}
+
+.property-details button {
+  width: 100%;
+  background: linear-gradient(135deg, #6bbdf8 0%, #3a8dca 100%);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.property-details button:hover {
+  background: linear-gradient(135deg, #2c5282, #4c8dd6);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(76, 141, 214, 0.2);
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .filter-sidebar {
+    width: 100%;
+    position: static;
+  }
+
+  .property-list {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+
+  .property-card {
+    height: 550px;
+  }
+}
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="old2.html" class="home-btn">🏠︎</a>
+    <a class="active" data-type="all">All Properties</a>
+    <a data-type="apartment">Apartments</a>
+    <a data-type="house">Houses</a>
+    <a data-type="villa">Villas</a>
+    <a data-type="commercial">Commercial</a>
+  </nav>
+  <div class="container">
+    <div class="filter-sidebar">
+      <div class="filter-section">
+        <h3>Filters</h3>
+        <h4>Property Size</h4>
+        <label><input type="checkbox" data-filter="size" value="1"> 1 BHK</label>
+        <label><input type="checkbox" data-filter="size" value="2"> 2 BHK</label>
+        <label><input type="checkbox" data-filter="size" value="3"> 3 BHK</label>
+        <label><input type="checkbox" data-filter="size" value="4"> 4 BHK</label>
+        <label><input type="checkbox" data-filter="size" value="5"> 5+ BHK</label>
+      </div>
+      <div class="filter-section">
+        <h4>Price Range (in Crores)</h4>
+        <div class="price-range">
+          <label>Min: <span id="minPriceLabel">0.5</span> Cr</label>
+          <input type="range" id="minPrice" min="0" max="10" step="0.1" value="0.5">
+          <label>Max: <span id="maxPriceLabel">3.0</span> Cr</label>
+          <input type="range" id="maxPrice" min="0" max="10" step="0.1" value="3.0">
+        </div>
+      </div>
+      <div class="filter-section">
+        <h4>Amenities</h4>
+        <label><input type="checkbox" data-filter="amenity" value="pool"> Swimming Pool</label>
+        <label><input type="checkbox" data-filter="amenity" value="gym"> Gym</label>
+        <label><input type="checkbox" data-filter="amenity" value="garden"> Garden</label>
+        <label><input type="checkbox" data-filter="amenity" value="parking"> Parking</label>
+        <label><input type="checkbox" data-filter="amenity" value="security"> 24x7 Security</label>
+        <label><input type="checkbox" data-filter="amenity" value="elevator"> Elevator</label>
+      </div>
+    </div>
+    <div class="property-list">
+      <div class="property-card" data-type="apartment" data-price="1.5" data-size="4" data-amenities="pool,parking,security,elevator">
+        <img src="pexels-rotekirsche-20-3634832-5438780.jpg" alt="Property 1">
+        <div class="property-details">
+          <h3>Opulent Apartment</h3>
+          <div class="property-info">
+            <span>3 BHK</span>
+            <span>1800 sq. ft.</span>
+            <span>₹ 1 Crore</span>
+          </div>
+          <div class="property-info">
+            <span>Swimming Pool</span>
+            <span>Parking</span>
+            <span>24x7 Security</span>
+            <span>Elevator</span>
+          </div>
+          <br> <br> <br> <br><br><br>
+          <button onclick="window.location.href='error.html'">View Details</button>
+        </div>
+      </div>
+
+      <div class="property-card" data-type="apartment" data-price="0.75" data-size="2" data-amenities="parking,elevator">
+        <img src="3adeeb1a1fd2745655a60c27fa8e5d96-cc_ft_960.jpg" alt="Property 2">
+        <div class="property-details">
+          <h3>Lakeside Studio Apartment</h3>
+          <div class="property-info">
+            <span>3 BHK</span>
+            <span>2000 sq. ft.</span>
+            <span>₹ 60 Lakhs</span>
+          </div>
+          <div class="property-info">
+            <span>Parking</span>
+            <span>Elevator</span>
+            <span>24x7 Security</span>
+          </div>
+          <br> <br> <br> <br> <br>  <br> 
+          <button onclick="window.location.href='error.html'">View Details</button>
+        </div>
+      </div>
+
+      <div class="property-card" data-type="villa" data-price="3.0" data-size="5" data-amenities="pool,garden,parking,security,elevator">
+        <img src="01_Facade__2_.webp" alt="Property 3">
+        <div class="property-details">
+          <h3>Lavish Villa</h3>
+          <div class="property-info">
+            <span>5 BHK</span>
+            <span>3700 sq. ft.</span>
+            <span>₹ 3.5 Crore</span>
+          </div>
+          <div class="property-info">
+            <span>Swimming Pool</span>
+            <span>Garden</span>
+            <span>Parking</span>
+            <span>24x7 Security</span>
+            <span>Elevator</span>
+          </div>
+          <br> <br> <br> <br> 
+          <button onclick="window.location.href='error.html'">View Details</button>
+        </div>
+      </div>
+
+      <div class="property-card" data-type="apartment" data-price="0.5" data-size="1" data-amenities="security,parking,elevator">
+        <img src="5.jpg" alt="Property 4">
+        <div class="property-details">
+          <h3>Exuberant Apartment</h3>
+          <div class="property-info">
+            <span>2 BHK</span>
+            <span>800 sq. ft.</span>
+            <span>₹ 70 Lakhs</span>
+          </div>
+          <div class="property-info">
+            <span>24x7 Security</span>
+            <span>Parking</span>
+            <span>Elevator</span>
+          </div>
+          <br> <br> <br> <br> <br>  <br> 
+          <button onclick="window.location.href='error.html'">View Details</button>
+        </div>
+      </div>
+      <div class="property-card" data-type="apartment" data-price="2.0" data-size="3" data-amenities="pool,gym,garden,parking,security,elevator">
+        <img src="unbuilt-florida-penthouse-sells-for-21-million-01.webp" alt="Property 5">
+        <div class="property-details">
+          <h3>Oceanview Penthouse</h3>
+          <div class="property-info">
+            <span>3 BHK</span>
+            <span>2200 sq. ft.</span>
+            <span>₹ 2.2 Crore</span>
+          </div>
+          <div class="property-info">
+            <span>Swimming Pool</span>
+            <span>Gym</span>
+            <span>Garden</span>
+            <span>Parking</span>
+            <span>Elevator</span>
+            <span>24x7 Security</span>
+          </div>
+          <br><br><br><br>
+          <button onclick="window.location.href='error.html'">View Details</button>
+        </div>
+      </div>
+
+      <div class="property-card" data-type="house" data-price="1.0" data-size="1" data-amenities="parking">
+        <img src="dentist1.0.jpg" alt="Property 6">
+        <div class="property-details">
+          <h3>Modern Loft</h3>
+          <div class="property-info">
+            <span>2 BHK</span>
+            <span>900 sq. ft.</span>
+            <span>₹ 1.3 Crore</span>
+          </div>
+          <div class="property-info">
+            <span>Parking</span>
+          </div>
+          <br>
+          <br>
+          <br><br><br><br>
+          <button onclick="window.location.href='error.html'">View Details</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <script>
+    // Navigation filter
+    document.querySelector('nav').addEventListener('click', (e) => {
+      if (e.target.tagName === 'A') {
+        document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+        e.target.classList.add('active');
+        filterProperties();
+      }
+    });
+
+    // Price range labels
+    const minPriceLabel = document.getElementById('minPriceLabel');
+    const maxPriceLabel = document.getElementById('maxPriceLabel');
+    const minPriceInput = document.getElementById('minPrice');
+    const maxPriceInput = document.getElementById('maxPrice');
+
+    minPriceInput.addEventListener('input', () => {
+      minPriceLabel.textContent = minPriceInput.value;
+      filterProperties();
+    });
+
+    maxPriceInput.addEventListener('input', () => {
+      maxPriceLabel.textContent = maxPriceInput.value;
+      filterProperties();
+    });
+
+    // Filter functionality
+    function filterProperties() {
+      const selectedType = document.querySelector('nav a.active').dataset.type;
+      const selectedSizes = Array.from(document.querySelectorAll('input[data-filter="size"]:checked')).map(cb => cb.value);
+      const selectedAmenities = Array.from(document.querySelectorAll('input[data-filter="amenity"]:checked')).map(cb => cb.value);
+      const minPrice = parseFloat(minPriceInput.value) || 0;
+      const maxPrice = parseFloat(maxPriceInput.value) || Infinity;
+
+      document.querySelectorAll('.property-card').forEach(card => {
+        const type = card.dataset.type;
+        const size = card.dataset.size;
+        const price = parseFloat(card.dataset.price);
+        const amenities = card.dataset.amenities.split(',');
+
+        const matchesType = selectedType === 'all' || type === selectedType;
+        const matchesSize = selectedSizes.length === 0 || selectedSizes.includes(size);
+        const matchesPrice = price >= minPrice && price <= maxPrice;
+        const matchesAmenities = selectedAmenities.every(amenity => amenities.includes(amenity));
+
+        if (matchesType && matchesSize && matchesPrice && matchesAmenities) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+      // Add event listeners for filters
+      document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+      checkbox.addEventListener('change', filterProperties);
+    });
+
+    document.getElementById('minPrice').addEventListener('input', filterProperties);
+    document.getElementById('maxPrice').addEventListener('input', filterProperties);
+  </script>
+</body>
+</html>
+
+  </script>
+</body>
+</html>
+

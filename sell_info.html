@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Property Listing</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #34495e;
+            --accent: #439fca;
+            --text: #2c3e50;
+            --background: #f8fafc;
+            --white: #ffffff;
+            --gradient: linear-gradient(135deg, #6bbdf8 0%, #3a8dca 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Background styling */
+        body::before {
+            content: '';
+            position: fixed;  /* Fixed position */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('shiny-night-city.jpg');  /* Replace with 'shiny.png' */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: -1;
+            filter: brightness(0.8);  /* Slightly darken the image */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 2rem;
+            position: relative;  /* For proper stacking context */
+            background: rgba(44, 62, 80, 0.3);  /* Subtle overlay */
+        }
+
+        .property-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+            overflow: hidden;
+            position: relative;  /* Ensure it's above the background */
+            z-index: 1;
+        }
+
+        /* Rest of the styles remain the same */
+        .property-header {
+            background: linear-gradient(135deg, #6bbdf8 0%, #3a8dca 100%);
+            padding: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .property-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('/api/placeholder/1200/400');
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        .property-header h1 {
+            color: var(--white);
+            font-size: 3rem;
+            font-weight: 300;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .property-form {
+            padding: 3rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border: 2px solid transparent;
+            background-color: var(--background);
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            color: var(--text);
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus {
+            border-color: #3a8dca;
+            background-color: var(--white);
+            outline: none;
+            box-shadow:linear-gradient(135deg, #6bbdf8 0%, #3a8dca 100%);
+        }
+
+        .input-group label {
+            position: absolute;
+            top: -0.75rem;
+            left: 1rem;
+            background-color: var(--white);
+            padding: 0 0.5rem;
+            font-size: 0.875rem;
+            color: var(--secondary);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .amenities-section {
+            grid-column: span 2;
+            background-color: var(--background);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .amenities-section h3 {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .amenities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .amenity-checkbox {
+            background-color: var(--white);
+            padding: 1rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .amenity-checkbox:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.1);
+        }
+
+        .amenity-checkbox i {
+            color: var(--accent);
+            font-size: 1.25rem;
+        }
+
+        .submit-button {
+            grid-column: span 2;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .submit-button button {
+            background: var(--gradient);
+            color: var(--white);
+            border: none;
+            padding: 1.25rem 3rem;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .submit-button button:hover {
+            transform: translateY(-3px);
+            background: linear-gradient(1deg, #3a8dca 0% ,  #6bbdf8 0%);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .file-upload {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-upload input[type="file"] {
+            display: none;
+        }
+
+        .file-upload label {
+            display: block;
+            padding: 1rem;
+            background: var(--background);
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload label:hover {
+            background: var(--white);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .property-container {
+                margin: 1rem;
+                border-radius: 20px;
+            }
+
+            .property-form {
+                grid-template-columns: 1fr;
+                padding: 1.5rem;
+            }
+
+            .property-header h1 {
+                font-size: 2rem;
+            }
+        }
+        .upload-feedback {
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            color: #3a8dca;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Rest of the HTML remains the same -->
+    <div class="property-container">
+        <div class="property-header">
+            <h1 id="propertyName" style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Luxury Property Listing</h1>
+        </div>
+        <form class="property-form" id="propertyForm">
+            <div>
+                <div class="input-group">
+                    <input type="text" id="nameInput" placeholder=" " required>
+                    <label>Property Name</label>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="builderInput" placeholder=" " required>
+                    <label>Builder Company</label>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="addressInput" placeholder=" " required>
+                    <label>Property Address</label>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="ownerInput" placeholder=" " required>
+                    <label>Property Owner</label>
+                </div>
+                
+            </div>
+            <div>
+                <div class="input-group">
+                    <input type="number" id="yearInput" placeholder=" " required>
+                    <label>Built Year</label>
+                </div>
+                <div class="input-group">
+                    <input type="number" id="sizeInput" placeholder=" " required>
+                    <label>Total Area (sq ft)</label>
+                </div>
+                <div class="input-group">
+                    <textarea id="descriptionInput" placeholder=" " rows="3" required></textarea>
+                    <label>Property Description</label>
+                </div>
+            </div>
+
+            <div class="amenities-section">
+                <h3>Luxury Amenities</h3>
+                <div class="amenities-grid" id="amenitiesContainer">
+                    <!-- Amenities will be dynamically generated -->
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="file-upload">
+                    <input type="file" id="imagesInput" multiple accept="image/*" required>
+                    <label for="imagesInput">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        Upload Property Images (Minimum 5 Required)
+                    </label>
+                    <div id="uploadFeedback" class="upload-feedback"></div>
+                </div>
+            </div>
+
+            <div class="submit-button">
+                <button type="button" onclick="uploadProperty()">Create Luxury Listing</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        // Previous amenities code remains the same
+        const amenitiesList = [
+            { name: 'Swimming Pool', icon: 'swimming-pool' },
+            { name: 'Private Gym', icon: 'dumbbell' },
+            { name: 'Valet Parking', icon: 'car' },
+            { name: '24/7 Security', icon: 'shield-alt' },
+            { name: 'Landscaped Garden', icon: 'tree' },
+            { name: 'Kids Zone', icon: 'child' },
+            { name: 'Smart Elevator', icon: 'arrow-up' },
+            { name: 'Clubhouse', icon: 'crown' },
+            { name: 'Jogging Track', icon: 'running' },
+            { name: 'Tennis Court', icon: 'volleyball-ball' },
+            { name: 'Luxury Spa', icon: 'spa' },
+            { name: 'Shopping Arcade', icon: 'shopping-cart' }
+        ];
+
+        // Previous generateAmenities function remains the same
+        function generateAmenities() {
+            const container = document.getElementById('amenitiesContainer');
+            amenitiesList.forEach((amenity, index) => {
+                const div = document.createElement('div');
+                div.classList.add('amenity-checkbox');
+                
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.id = `amenity-${index}`;
+                checkbox.name = amenity.name;
+
+                const icon = document.createElement('i');
+                icon.className = `fas fa-${amenity.icon}`;
+
+                const label = document.createElement('label');
+                label.htmlFor = `amenity-${index}`;
+                label.textContent = amenity.name;
+
+                div.appendChild(checkbox);
+                div.appendChild(icon);
+                div.appendChild(label);
+                container.appendChild(div);
+
+                div.addEventListener('click', (e) => {
+                    if (e.target !== checkbox) {
+                        checkbox.checked = !checkbox.checked;
+                    }
+                });
+            });
+        }
+
+        generateAmenities();
+
+        // Add image upload handler
+        document.getElementById('imagesInput').addEventListener('change', function(e) {
+            const feedback = document.getElementById('uploadFeedback');
+            feedback.style.display = 'block';
+            
+            if (this.files.length < 5) {
+                feedback.style.color = '#ff0000';
+                feedback.textContent = `Please select at least 5 images (${this.files.length} selected)`;
+                this.value = ''; // Clear the selection
+            } else {
+                feedback.style.color = '#3a8dca';
+                feedback.textContent = `${this.files.length} images selected`;
+            }
+        });
+
+        function uploadProperty() {
+    const requiredInputs = document.querySelectorAll('[required]');
+    let isValid = true;
+
+    requiredInputs.forEach(input => {
+        if (!input.value) {
+            input.classList.add('invalid');
+            isValid = false;
+        } else {
+            input.classList.remove('invalid');
+        }
+    });
+
+    // Check for minimum 5 images
+    const imageInput = document.getElementById('imagesInput');
+    if (imageInput.files.length < 5) {
+        alert('Please upload at least 5 property images');
+        return;
+    }
+
+    if (!isValid) {
+        alert('Please fill in all required fields');
+        return;
+    }
+
+    const formData = {
+        name: document.getElementById('nameInput').value,
+        builder: document.getElementById('builderInput').value,
+        address: document.getElementById('addressInput').value,
+        owner: document.getElementById('ownerInput').value,
+        year: document.getElementById('yearInput').value,
+        size: document.getElementById('sizeInput').value,
+        description: document.getElementById('descriptionInput').value,
+        images: imageInput.files.length,
+        amenities: amenitiesList
+            .filter((_, index) => document.getElementById(`amenity-${index}`).checked)
+            .map(amenity => amenity.name)
+    };
+
+    document.getElementById('propertyName').textContent = formData.name;
+
+    alert(`Please Confirm The Following Details!\n\n` +
+          `${formData.name}\n` +
+          `By ${formData.builder}\n` +
+          `Address: ${formData.address}\n` +
+          `Images Uploaded: ${formData.images}\n\n` +
+          `Featured Amenities:\n${formData.amenities.join('\n')}`);
+    
+    // Redirect to apple.html
+    window.location.href = "apple.html";
+}
+
+    </script>
+</body>
+</html>
