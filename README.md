@@ -79,7 +79,7 @@ This platform supports both **direct sales** and **demand-driven auctions**, all
 
 ## 📌 Repository
 
-🔗 **GitHub URL**: https://github.com/sayantanpaul-official/real-estate-auction-platform 
+🔗 **GitHub URL**: https://github.com/sidx2003/Apartments.com
 > *(Forked by Sayandip Saha as part of the group collaboration.)*
 
 ## 🙌 Acknowledgements
